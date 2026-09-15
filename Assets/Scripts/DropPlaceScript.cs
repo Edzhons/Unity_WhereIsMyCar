@@ -8,6 +8,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     private float xSizeDiff, ySizeDiff;
     public GameObjectsScript gameObjectsScript;
 
+
     void Awake()
     {
         gameObjectsScript = Object.FindFirstObjectByType<GameObjectsScript>();
@@ -15,32 +16,32 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if((eventData.pointerDrag  != null) && Input.GetMouseButtonUp(0) && 
+        if ((eventData.pointerDrag != null) && Input.GetMouseButtonUp(0) &&
             (!Input.GetMouseButton(2)))
         {
-            if (eventData.pointerDrag.Equals(tag))
+            if (eventData.pointerDrag.tag.Equals(tag))
             {
-                placeZRot = 
+                placeZRot =
                     eventData.pointerDrag.GetComponent<RectTransform>().transform.eulerAngles.z;
                 carZRot = GetComponent<RectTransform>().transform.eulerAngles.z;
-                diffZRot = Mathf.Abs(placeZRot = carZRot);
+                diffZRot = Mathf.Abs(placeZRot - carZRot);
                 Debug.Log("Diff Z Rot: " + diffZRot);
 
                 placeSize = eventData.pointerDrag.GetComponent<RectTransform>().localScale;
                 carSize = GetComponent<RectTransform>().localScale;
                 xSizeDiff = Mathf.Abs(placeSize.x - carSize.x);
-                xSizeDiff = Mathf.Abs(placeSize.y - carSize.y);
-                Debug.Log("Diff x size: " + xSizeDiff);
-                Debug.Log("Diff y size: " + ySizeDiff);
+                ySizeDiff = Mathf.Abs(placeSize.y - carSize.y);
+                Debug.Log("Diff X Size: " + xSizeDiff);
+                Debug.Log("Diff Y Size: " + ySizeDiff);
 
-                if((diffZRot <= 7 || (diffZRot >= 353 && diffZRot <= 360)) &&
+                if ((diffZRot <= 7 || (diffZRot >= 353 && diffZRot <= 360)) &&
                     (xSizeDiff <= 0.08f && ySizeDiff <= 0.08f))
                 {
                     Debug.Log("Car placed correctly!");
                     gameObjectsScript.inRightPlace = true;
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition =
                         GetComponent<RectTransform>().anchoredPosition;
-                    
+
                     eventData.pointerDrag.GetComponent<RectTransform>().localScale =
                         GetComponent<RectTransform>().localScale;
 
@@ -67,7 +68,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                     }
                 }
 
-            } else
+            }
+            else
             {
                 gameObjectsScript.inRightPlace = false;
                 gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[4]);
@@ -81,12 +83,12 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
                     case "Ambulance":
                         gameObjectsScript.medicine.GetComponent<RectTransform>().localPosition =
-                            gameObjectsScript.medicineCoord;
+                             gameObjectsScript.medicineCoord;
                         break;
 
                     case "School":
-                        gameObjectsScript.schoolBuss.GetComponent<RectTransform>().localPosition =
-                            gameObjectsScript.schoolBussCoord;
+                        gameObjectsScript.schoolBus.GetComponent<RectTransform>().localPosition =
+                             gameObjectsScript.schoolBusCoord;
                         break;
 
                     default:

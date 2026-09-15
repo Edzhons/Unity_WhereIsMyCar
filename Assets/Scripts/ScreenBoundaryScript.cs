@@ -1,22 +1,22 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ScreenBoundaryScript : MonoBehaviour
 {
     [HideInInspector]
     public Vector3 screenPoint, offset;
     public float minX, maxX, minY, maxY;
-    public float reductionFactor = 0.02f; //2% no ekrána izméra
+    public float reductionFactor = 0.02f; //2% no ekrana izmera
 
 
     private void Awake()
     {
         Vector3 lowerLeft = Camera.main.ScreenToWorldPoint(Vector3.zero);
-        Vector3 upperRight = 
+        Vector3 upperRight =
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 
         float widthReduction = (upperRight.x - lowerLeft.x) * reductionFactor;
         float heightReduction = (upperRight.y - lowerLeft.y) * reductionFactor;
-    
+
         minX = lowerLeft.x + widthReduction;
         maxX = upperRight.x - widthReduction;
         minY = lowerLeft.y + widthReduction;
