@@ -35,9 +35,9 @@ Automašīna tiek uzskatīta par pareizi novietotu, ja:
 
 ---
 
-## 🧩 Nejaušināšana
+## 🧩 Randomizācija
 
-Spēlē tiek izmantotas nejaušinātas automašīnu un to vietu sākuma pozīcijas.
+Spēlē tiek izmantotas randomizētas automašīnu un to vietu sākuma pozīcijas.
 
 Spēlē kopā ir:
 
@@ -53,7 +53,7 @@ Tas nozīmē, ka katrā spēlē:
 - 12 pozīcijas tiek aizņemtas;
 - 5 pozīcijas paliek tukšas.
 
-Tiek nejaušināti arī automašīnu parametri:
+Tiek randomizēti arī automašīnu parametri:
 
 - pozīcija;
 - rotācija;
@@ -122,7 +122,7 @@ Tiek pārbaudīts:
 
 ### `GameObjectsScript.cs`
 
-Satur spēles objektu atsauces un apstrādā automašīnu un to vietu nejaušināšanu.
+Satur spēles objektu atsauces un apstrādā automašīnu un to vietu randomizāciju.
 
 ### `ObjectTransformationScript.cs`
 
@@ -155,8 +155,7 @@ Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
 - [x] Nejauša rotācija
 - [x] Nejaušs izmērs
 - [x] Nejaušs spoguļattēls
-- [ ] Pilnībā pārbaudīt nejaušināšanu
-- [ ] Noregulēt spēles grūtības pakāpi
+- [x] Pilnībā pārbaudīt randomizāciju
 
 ---
 
@@ -226,8 +225,6 @@ Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
 ## 🐛 Zināmās problēmas
 
 Pašlaik nav zināmu spēli bloķējošu problēmu.
-
-Unity Console var parādīties atsevišķi renderēšanas brīdinājumi, kas pašlaik neietekmē spēles darbību.
 
 ---
 
