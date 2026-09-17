@@ -7,6 +7,15 @@ TagManager:
   - Garbage
   - Ambulance
   - School
+  - Eskavators
+  - B2
+  - CementaMasina
+  - E46
+  - E61
+  - Policija
+  - Traktors
+  - Traktors5
+  - Ugunsdzeseji
   layers:
   - Default
   - TransparentFX
