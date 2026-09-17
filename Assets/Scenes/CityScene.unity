@@ -1034,6 +1034,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectsScript: {fileID: 0}
+  minSize: 0.6
+  maxSize: 1.3
+  sizeSpeed: 0.001
 --- !u!1 &474744292
 GameObject:
   m_ObjectHideFlags: 0
