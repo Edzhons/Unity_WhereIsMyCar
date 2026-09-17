@@ -1,4 +1,4 @@
-# 🚗 Automašīnu puzle
+# 🚗 Kur mans vāģ's?
 
 Vienkārša 2D puzles spēle, kas izstrādāta **Unity**, kurā spēlētājam uz kartes jānovieto dažādas automašīnas tām paredzētajās vietās.
 
