@@ -18,8 +18,8 @@ Kad visi parametri atbilst paredzētajai vietai, automašīna tiek uzskatīta pa
 | Taustiņš | Darbība |
 |---|---|
 | `Kreisā peles poga` | Vilkt automašīnu |
-| `Z` | Rotēt pulksteņrādītāja virzienā |
-| `X` | Rotēt pretēji pulksteņrādītāja virzienam |
+| `Z` | Rotēt pretēji pulksteņrādītāja virzienam |
+| `X` | Rotēt pulksteņrādītāja virziená |
 | `↑` | Palielināt augstumu |
 | `↓` | Samazināt augstumu |
 | `←` | Samazināt platumu |
