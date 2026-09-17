@@ -1,102 +1,100 @@
-# 🚗 Car Puzzle Game
+# 🚗 Automašīnu puzle
 
-A simple 2D puzzle game made in Unity where the player has to place different vehicles into their corresponding places on a map.
+Vienkārša 2D puzles spēle, kas izstrādāta **Unity**, kurā spēlētājam uz kartes jānovieto dažādas automašīnas tām paredzētajās vietās.
 
-The player must drag each vehicle to the correct location and adjust its:
+Spēlētājam katra automašīna ir jāaizvelk uz atbilstošo vietu un jāpielāgo tās:
 
-- Position
-- Size
-- Rotation
-- Mirrored state
+- pozīcija;
+- izmērs;
+- rotācija;
+- spoguļattēls.
 
-until it matches the corresponding place.
+Kad visi parametri atbilst paredzētajai vietai, automašīna tiek uzskatīta par pareizi novietotu.
 
 ---
 
-## 🎮 Gameplay
+## 🎮 Spēles vadība
 
-The game consists of a map containing vehicles and corresponding vehicle places.
-
-Each vehicle and its place have a matching tag. The player must identify where each vehicle belongs and then transform it until it fits the target.
-
-### Controls
-
-| Key | Action |
+| Taustiņš | Darbība |
 |---|---|
-| `Left Mouse Button` | Drag a vehicle |
-| `Z` | Rotate clockwise |
-| `X` | Rotate counter-clockwise |
-| `↑` | Increase height |
-| `↓` | Decrease height |
-| `←` | Decrease width |
-| `→` | Increase width |
-| `Space` | Flip / mirror the vehicle |
+| `Kreisā peles poga` | Vilkt automašīnu |
+| `Z` | Rotēt pulksteņrādītāja virzienā |
+| `X` | Rotēt pretēji pulksteņrādītāja virzienam |
+| `↑` | Palielināt augstumu |
+| `↓` | Samazināt augstumu |
+| `←` | Samazināt platumu |
+| `→` | Palielināt platumu |
+| `Space` | Izveidot spoguļattēlu |
 
-A vehicle is considered correctly placed when its:
+Automašīna tiek uzskatīta par pareizi novietotu, ja:
 
-- Position matches the target
-- Rotation is within the allowed tolerance
-- Width and height are within the allowed tolerance
-- Mirrored state matches the target
-
----
-
-## 🧩 Randomization
-
-The game uses randomized spawn positions for both vehicles and their corresponding places.
-
-There are currently:
-
-- **12 vehicles**
-- **12 vehicle places**
-- **17 possible vehicle spawn positions**
-- **17 possible vehicle-place spawn positions**
-
-At the start of each game, the available positions are shuffled and 12 of the 17 positions are selected for the vehicles and places.
-
-This leaves **5 unused positions** on each side.
-
-Vehicle properties are also randomized at the start of each game:
-
-- Position
-- Rotation
-- Width
-- Height
-- Mirrored state
-
-This makes the puzzle different each time the game starts.
+- tai ir pareizais tags;
+- rotācijas starpība ir pieļaujamajā robežā;
+- platuma un augstuma starpība ir pieļaujamajā robežā;
+- spoguļattēla stāvoklis atbilst paredzētajai vietai.
 
 ---
 
-## 🖼️ Screenshots
+## 🧩 Nejaušināšana
 
-### Main Game
+Spēlē tiek izmantotas nejaušinātas automašīnu un to vietu sākuma pozīcijas.
 
-<!-- Add screenshot here -->
+Spēlē kopā ir:
 
-### Example Gameplay
+- **12 automašīnas**;
+- **12 automašīnu vietas**;
+- **17 iespējamās automašīnu pozīcijas**;
+- **17 iespējamās automašīnu vietu pozīcijas**.
 
-<!-- Add screenshot here -->
+Katras spēles sākumā pozīcijas tiek sajauktas, un 12 no 17 pozīcijām tiek izmantotas.
 
-### Correctly Placed Vehicle
+Tas nozīmē, ka katrā spēlē:
 
-<!-- Add screenshot here -->
+- 12 pozīcijas tiek aizņemtas;
+- 5 pozīcijas paliek tukšas.
+
+Tiek nejaušināti arī automašīnu parametri:
+
+- pozīcija;
+- rotācija;
+- platums;
+- augstums;
+- spoguļattēls.
+
+Tādējādi katra spēles palaišana veido atšķirīgu puzles konfigurāciju.
 
 ---
 
-## 🛠️ Technologies
+## 🖼️ Ekrānattēli
+
+### Galvenā spēle
+
+<!-- Ievieto ekrānattēlu šeit -->
+
+### Spēles piemērs
+
+<!-- Ievieto ekrānattēlu šeit -->
+
+### Pareizi novietota automašīna
+
+<!-- Ievieto ekrānattēlu šeit -->
+
+---
+
+## 🛠️ Izmantotās tehnoloģijas
 
 - **Unity**
 - **C#**
 - Unity UI / `RectTransform`
 - Unity Event System
-- Git / GitHub
+- Git
+- GitHub
 
 ---
 
-## 📁 Project Structure
+## 📁 Projekta struktūra
 
-The main scripts currently used by the project include:
+Galvenie spēlē izmantotie skripti:
 
 ```text
 Scripts/
@@ -105,3 +103,153 @@ Scripts/
 ├── GameObjectsScript.cs
 ├── ObjectTransformationScript.cs
 └── ScreenBoundaryScript.cs
+```
+
+### `DragAndDropScript.cs`
+
+Atbild par automašīnu vilkšanu ar peli.
+
+### `DropPlaceScript.cs`
+
+Atbild par automašīnas ievietošanu paredzētajā vietā un pārbauda, vai automašīna atbilst vietai.
+
+Tiek pārbaudīts:
+
+- tags;
+- rotācija;
+- izmērs;
+- spoguļattēls.
+
+### `GameObjectsScript.cs`
+
+Satur spēles objektu atsauces un apstrādā automašīnu un to vietu nejaušināšanu.
+
+### `ObjectTransformationScript.cs`
+
+Atbild par izvēlētās automašīnas parametru mainīšanu:
+
+- rotāciju;
+- platumu;
+- augstumu;
+- spoguļattēlu.
+
+### `ScreenBoundaryScript.cs`
+
+Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
+
+---
+
+# ✅ TODO
+
+## 🎯 Spēles pamatfunkcionalitāte
+
+- [x] Automašīnu vilkšana
+- [x] Automašīnu un vietu sasaistīšana ar tagiem
+- [x] Automašīnu rotēšana
+- [x] Automašīnu izmēra mainīšana
+- [x] Automašīnu spoguļošana
+- [x] Pareizas novietošanas pārbaude
+- [x] Nepareizas novietošanas apstrāde
+- [x] Nejaušas automašīnu pozīcijas
+- [x] Nejaušas automašīnu vietu pozīcijas
+- [x] Nejauša rotācija
+- [x] Nejaušs izmērs
+- [x] Nejaušs spoguļattēls
+- [ ] Pilnībā pārbaudīt nejaušināšanu
+- [ ] Noregulēt spēles grūtības pakāpi
+
+---
+
+## 🏠 Sākuma izvēlne
+
+- [ ] Izveidot sākuma izvēlni
+- [ ] Pievienot **Spēlēt** pogu
+- [ ] Pievienot **Iziet** pogu
+- [ ] Pievienot spēles nosaukumu
+- [ ] Izveidot sākuma izvēlnes fonu
+- [ ] Savienot **Spēlēt** pogu ar spēles ainu
+- [ ] Savienot **Iziet** pogu ar programmas aizvēršanu
+- [ ] Pārbaudīt ainu pārslēgšanu
+
+---
+
+## 🔊 Skaņa
+
+- [x] Automašīnas mijiedarbības skaņa
+- [x] Pareizas novietošanas skaņa
+- [x] Nepareizas novietošanas skaņa
+- [ ] Pievienot sākuma izvēlnes mūziku
+- [ ] Pievienot spēles fona mūziku
+- [ ] Pievienot pogu skaņas
+- [ ] Pievienot skaļuma regulēšanu
+- [ ] Pievienot skaņas izslēgšanas iespēju
+
+---
+
+## ✨ Animācijas un vizuālie efekti
+
+- [ ] Pievienot pogu animācijas
+- [ ] Pievienot pogu nospiešanas animācijas
+- [ ] Pievienot automašīnas vilkšanas animāciju
+- [ ] Pievienot pareizas novietošanas animāciju
+- [ ] Pievienot vizuālu reakciju nepareizas novietošanas gadījumā
+- [ ] Pievienot pārejas animāciju starp izvēlni un spēli
+- [ ] Pievienot spēles pabeigšanas animāciju
+- [ ] Pievienot nelielas kartes/vides animācijas
+
+---
+
+## 🏆 Spēles pabeigšana
+
+- [ ] Noteikt, kad visas automašīnas ir pareizi novietotas
+- [ ] Izveidot spēles pabeigšanas ekrānu/paziņojumu
+- [ ] Pievienot pabeigšanas skaņu
+- [ ] Pievienot iespēju sākt puzli no jauna
+- [ ] Pievienot iespēju atgriezties sākuma izvēlnē
+
+---
+
+## ⚙️ Uzlabošana un noslēdzošā izstrāde
+
+- [ ] Uzlabot lietotāja saskarni
+- [ ] Pievienot vizuālu norādi izvēlētajai automašīnai
+- [ ] Uzlabot nepareizas novietošanas vizuālo reakciju
+- [ ] Pārbaudīt spēli dažādās ekrāna izšķirtspējās
+- [ ] Pārbaudīt dažādus ekrāna malu attiecību formātus
+- [ ] Novērst atlikušos Unity brīdinājumus/kļūdas, ja tie ietekmē spēli
+- [ ] Veikt pilnu spēles testēšanu
+- [ ] Izveidot gala `.exe` versiju
+- [ ] Pārbaudīt gala versiju uz cita datora
+
+---
+
+## 🐛 Zināmās problēmas
+
+Pašlaik nav zināmu spēli bloķējošu problēmu.
+
+Unity Console var parādīties atsevišķi renderēšanas brīdinājumi, kas pašlaik neietekmē spēles darbību.
+
+---
+
+## 📌 Projekta statuss
+
+**Izstrādes stadija:** Aktīva izstrāde
+
+Spēles galvenā puzles funkcionalitāte ir izveidota. Tālāk plānots izstrādāt sākuma izvēlni, papildināt skaņas un animācijas, uzlabot vizuālo noformējumu un veikt gala testēšanu.
+
+---
+
+## 👨‍💻 Autors
+
+**Edžus Krūmiņš**
+
+Programmēšanas tehniķis  
+Liepājas Valsts tehnikums
+
+---
+
+## 📜 Licence
+
+Šis projekts ir izstrādāts mācību un noslēguma projekta vajadzībām.
+
+Visas tiesības aizsargātas.
