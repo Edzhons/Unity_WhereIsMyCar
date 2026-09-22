@@ -310,6 +310,7 @@ RectTransform:
   - {fileID: 1393765963}
   - {fileID: 717209964}
   - {fileID: 148843034}
+  - {fileID: 414594859}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -852,6 +853,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385641697}
   m_CullTransparentMesh: 1
+--- !u!1 &414594858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 414594859}
+  m_Layer: 5
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &414594859
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414594858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 78528970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 960, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &449420540
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +900,7 @@ GameObject:
   - component: {fileID: 449420542}
   - component: {fileID: 449420543}
   - component: {fileID: 449420544}
+  - component: {fileID: 449420545}
   m_Layer: 0
   m_Name: ScriptHolder
   m_TagString: Untagged
@@ -992,8 +1029,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 406eb1e463363554c87c4a6fc611613e, type: 3}
   - {fileID: 8300000, guid: 9fd190caa7bd53346af74d5064e02bcd, type: 3}
   - {fileID: 8300000, guid: a8208f1ae31c4294fa438c10c7091439, type: 3}
-  - {fileID: 8300000, guid: c015f08301e0b444dbfd43dfc04a0a62, type: 3}
-  - {fileID: 8300000, guid: df4ac1fa40f1a2649887bcea2a846f8a, type: 3}
+  - {fileID: 8300000, guid: 8af4db4f6a764df4098879b1e28b3f5e, type: 3}
+  - {fileID: 8300000, guid: 020e9203117a05541a4794910431f2b4, type: 3}
   - {fileID: 8300000, guid: 75e20b3c319d6e4498a9c05a81587495, type: 3}
   - {fileID: 8300000, guid: 29a6e9b4c0f00c648a8ab7db0d94e75b, type: 3}
   - {fileID: 8300000, guid: 8af4db4f6a764df4098879b1e28b3f5e, type: 3}
@@ -1001,6 +1038,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f847b5a06b3cadd4f8026ffe9240bcd5, type: 3}
   - {fileID: 8300000, guid: db145f7479c02454eb38154a40942a4f, type: 3}
   - {fileID: 8300000, guid: 62d7984bd82376e40b5abbad960d9c6d, type: 3}
+  - {fileID: 8300000, guid: df4ac1fa40f1a2649887bcea2a846f8a, type: 3}
+  - {fileID: 8300000, guid: c015f08301e0b444dbfd43dfc04a0a62, type: 3}
   inRightPlace: 0
 --- !u!114 &449420543
 MonoBehaviour:
@@ -1037,6 +1076,33 @@ MonoBehaviour:
   minSize: 0.6
   maxSize: 1.3
   sizeSpeed: 0.001
+--- !u!114 &449420545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449420540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93dd50935dc11b4e83e32bc8c14af8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cloudPrefabs:
+  - {fileID: 7691069507174795518, guid: a3e0382c539f9fa41a9ed1e97db786f6, type: 3}
+  - {fileID: 630759790692073006, guid: 49fb68a6519db2643aca8b0bb8632d95, type: 3}
+  - {fileID: 670569297746710303, guid: cd3d6e981c1a63149955450beb1bd387, type: 3}
+  plainPrefabs:
+  - {fileID: 1973544003872700676, guid: 339430cbb09a8f84f82ee5329740ab2b, type: 3}
+  - {fileID: 4545241813706418208, guid: 5440fc445e3deab4284bf30f7e8ec88e, type: 3}
+  - {fileID: 670569297746710303, guid: cd3d6e981c1a63149955450beb1bd387, type: 3}
+  spawnPoint: {fileID: 414594859}
+  cloudSpawnInterval: 2
+  plainSpawnInterval: 3
+  cloudMinSpeed: 1.5
+  cloudMaxSpeed: 150
+  plainMinSpeed: 2
+  plainMaxSpeed: 100
 --- !u!1 &474744292
 GameObject:
   m_ObjectHideFlags: 0
