@@ -78,7 +78,44 @@ public class FlyingObjectControllerScript : MonoBehaviour
             TriggerExplosion();
         }
 
-        // Turpināsim
+        if(GameObjectsScript.isDragging && !isFadingOut && 
+            RectTransformUtility.RectangleContainsScreenPoint(
+            rectTransform, Input.mousePosition, Camera.main))
+        {
+            Debug.Log("The cursor collided with a flying object!");
+            if(GameObjectsScript.lastDragged != null)
+            {
+                StartCoroutine(ShrinkAndDestroy(GameObjectsScript.lastDragged, 0.5f));
+                GameObjectsScript.lastDragged = null;
+                GameObjectsScript.isDragging = false;
+            }
+
+            if (CompareTag("Bomb"))
+            
+                StartAndDestroy(Color.red);
+
+            else
+                StartAndDestroy(Color.cyan);
+        }
+
+    }
+
+    IEnumerator ShrinkAndDestroy(GameObject obj, float duration)
+    {
+        Vector3 originalScale = obj.transform.localScale;
+        Quaternion originamRotation = obj.transform.rotation;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            obj.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, time / duration);
+            float angle = Mathf.Lerp(0f, 360f, time / duration);
+            obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            yield return null;
+        }
+        Destroy(obj);
     }
 
     public void TriggerExplosion()
