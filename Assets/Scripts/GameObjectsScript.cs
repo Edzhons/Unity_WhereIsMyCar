@@ -164,6 +164,112 @@ public class GameObjectsScript : MonoBehaviour
         }
     }
 
+    public void RandomizeSingleCar(GameObject car)
+    {
+        RectTransform carRect = car.GetComponent<RectTransform>();
+
+
+        // =========================
+        // FIND AN EMPTY SPAWN POINT
+        // =========================
+
+        int randomIndex = Random.Range(0, carSpawnPoints.Length);
+
+        bool positionOccupied = true;
+
+        while (positionOccupied)
+        {
+            randomIndex = Random.Range(0, carSpawnPoints.Length);
+
+            positionOccupied = false;
+
+            foreach (GameObject otherCar in cars)
+            {
+                if (otherCar == car)
+                    continue;
+
+                RectTransform otherRect =
+                    otherCar.GetComponent<RectTransform>();
+
+                float distance =
+                    Vector2.Distance(
+                        otherRect.anchoredPosition,
+                        carSpawnPoints[randomIndex]
+                            .GetComponent<RectTransform>()
+                            .anchoredPosition
+                    );
+
+                if (distance < 1f)
+                {
+                    positionOccupied = true;
+                    break;
+                }
+            }
+        }
+
+
+        // =========================
+        // APPLY RANDOM POSITION
+        // =========================
+
+        carRect.anchoredPosition =
+            carSpawnPoints[randomIndex]
+            .GetComponent<RectTransform>()
+            .anchoredPosition;
+
+
+        // =========================
+        // RANDOM ROTATION
+        // =========================
+
+        float randomRotation =
+            Random.Range(-45f, 45f);
+
+        carRect.localRotation =
+            Quaternion.Euler(0f, 0f, randomRotation);
+
+
+        // =========================
+        // RANDOM SIZE
+        // =========================
+
+        float randomX =
+            Random.Range(0.6f, 1.3f);
+
+        float randomY =
+            Random.Range(0.6f, 1.3f);
+
+        carRect.localScale =
+            new Vector3(
+                randomX,
+                randomY,
+                carRect.localScale.z
+            );
+
+
+        // =========================
+        // RANDOM MIRROR
+        // =========================
+
+        bool randomMirror =
+            Random.Range(0, 2) == 1;
+
+        if (randomMirror)
+        {
+            carRect.localScale =
+                new Vector3(
+                    -carRect.localScale.x,
+                    carRect.localScale.y,
+                    carRect.localScale.z
+                );
+        }
+
+
+        Debug.Log(
+            "Car randomized again: " +
+            car.name
+        );
+    }
 
     void Shuffle<T>(T[] array)
     {

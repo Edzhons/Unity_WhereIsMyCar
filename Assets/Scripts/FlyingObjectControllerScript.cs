@@ -85,7 +85,9 @@ public class FlyingObjectControllerScript : MonoBehaviour
             Debug.Log("The cursor collided with a flying object!");
             if(GameObjectsScript.lastDragged != null)
             {
-                StartCoroutine(ShrinkAndDestroy(GameObjectsScript.lastDragged, 0.5f));
+                FindFirstObjectByType<GameManagerScript>()
+                    .LoseLife(); // Juu
+                StartCoroutine(ShrinkAndRespawn(GameObjectsScript.lastDragged, 0.5f));
                 GameObjectsScript.lastDragged = null;
                 GameObjectsScript.isDragging = false;
             }
@@ -100,22 +102,66 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     }
 
-    IEnumerator ShrinkAndDestroy(GameObject obj, float duration)
+    IEnumerator ShrinkAndRespawn(GameObject obj, float duration)
     {
         Vector3 originalScale = obj.transform.localScale;
-        Quaternion originamRotation = obj.transform.rotation;
+
         float time = 0f;
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            obj.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, time / duration);
-            float angle = Mathf.Lerp(0f, 360f, time / duration);
-            obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            float progress = time / duration;
+
+            // Shrink
+            obj.transform.localScale =
+                Vector3.Lerp(
+                    originalScale,
+                    Vector3.zero,
+                    progress
+                );
+
+            // Rotate
+            float angle =
+                Mathf.Lerp(0f, 360f, progress);
+
+            obj.transform.rotation =
+                Quaternion.Euler(0f, 0f, angle);
 
             yield return null;
         }
-        Destroy(obj);
+
+
+        // =========================
+        // RANDOMIZE CAR AGAIN
+        // =========================
+
+        if (gameObjectsScript != null)
+        {
+            gameObjectsScript.RandomizeSingleCar(obj);
+        }
+
+
+        // =========================
+        // RESTORE CANVAS GROUP
+        // =========================
+
+        CanvasGroup canvasGroup =
+            obj.GetComponent<CanvasGroup>();
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+
+        // =========================
+        // RESET OBJECT STATE
+        // =========================
+
+        obj.SetActive(true);
     }
 
     public void TriggerExplosion()
@@ -124,7 +170,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
         if (gameObjectsScript.carSoundSource != null && gameObjectsScript.sounds != null)
         {
-            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[6], 5f);
+            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[14], 5f);
         }
 
         if (TryGetComponent<Animator>(out Animator animator))
@@ -216,7 +262,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
             StartCoroutine(Vibrate());
             if (gameObjectsScript.carSoundSource != null && gameObjectsScript.sounds != null)
             {
-                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[5]);
+                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[15]);
             }
         }
     }

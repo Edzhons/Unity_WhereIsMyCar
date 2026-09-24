@@ -45,6 +45,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 {
                     Debug.Log("Car placed correctly!");
                     gameObjectsScript.inRightPlace = true;
+                    FindFirstObjectByType<GameManagerScript>()
+                        .CorrectCarPlaced(); // Juu
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition =
                         GetComponent<RectTransform>().anchoredPosition;
 

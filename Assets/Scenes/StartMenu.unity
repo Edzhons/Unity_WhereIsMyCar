@@ -414,18 +414,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885616250}
-        m_TargetAssemblyTypeName: MenuAudioScript, Assembly-CSharp
-        m_MethodName: PlayButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1885616247}
         m_TargetAssemblyTypeName: StartMenuScript, Assembly-CSharp
         m_MethodName: StartGame
@@ -886,18 +874,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885616250}
-        m_TargetAssemblyTypeName: MenuAudioScript, Assembly-CSharp
-        m_MethodName: PlayButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1885616247}
         m_TargetAssemblyTypeName: StartMenuScript, Assembly-CSharp
         m_MethodName: QuitGame
@@ -1183,7 +1159,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1885616248}
   - component: {fileID: 1885616247}
-  - component: {fileID: 1885616250}
   - component: {fileID: 1885616249}
   - component: {fileID: 1885616251}
   m_Layer: 0
@@ -1205,6 +1180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b9eb705d96d74429877db87c56c19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1885616249}
+  buttonSound: {fileID: 8300000, guid: 18b88bb344b32014da68e51689168d62, type: 3}
 --- !u!4 &1885616248
 Transform:
   m_ObjectHideFlags: 0
@@ -1317,20 +1294,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1885616250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885616246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db602a9e1e2f8b540a7045cc16222d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 1885616249}
-  buttonSound: {fileID: 8300000, guid: 18b88bb344b32014da68e51689168d62, type: 3}
 --- !u!82 &1885616251
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1341,8 +1304,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2afb34896415ebe4092d5152c3026039, type: 3}
+  m_Resource: {fileID: 8300000, guid: 2afb34896415ebe4092d5152c3026039, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.4
   m_Pitch: 1
