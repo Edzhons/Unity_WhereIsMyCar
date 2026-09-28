@@ -4,8 +4,10 @@ using System.Collections;
 
 public class StartMenuScript : MonoBehaviour
 {
+    public AudioSource musicSource;
     public AudioSource audioSource;
     public AudioClip buttonSound;
+    public AudioClip hornSound;
 
     public void StartGame()
     {
@@ -15,6 +17,23 @@ public class StartMenuScript : MonoBehaviour
     public void QuitGame()
     {
         StartCoroutine(QuitGameWithSound());
+    }
+
+    public void PlayHornSound()
+    {
+        StartCoroutine(PlayHorn());
+    }
+
+    public void ToggleMusic()
+    {
+        if (musicSource.isPlaying)
+        {
+            musicSource.Pause();
+        }
+        else
+        {
+            musicSource.UnPause();
+        }
     }
 
 
@@ -45,5 +64,14 @@ public class StartMenuScript : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    IEnumerator PlayHorn()
+    {
+        // Play horn sound
+        audioSource.PlayOneShot(hornSound);
+
+        // Wait for the sound to finish
+        yield return new WaitForSeconds(hornSound.length);
     }
 }

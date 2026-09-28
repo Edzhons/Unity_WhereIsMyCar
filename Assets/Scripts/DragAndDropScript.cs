@@ -9,6 +9,8 @@ public class DragAndDropScript : MonoBehaviour,
     private RectTransform rectTransform;
     public ScreenBoundaryScript screenBoundaryScript;
 
+    public static bool blockDraggingUntilMouseUp = false;
+
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -33,6 +35,12 @@ public class DragAndDropScript : MonoBehaviour,
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (blockDraggingUntilMouseUp)
+            return;
+
+        if (!Input.GetMouseButton(0))
+            return;
+
         if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             GameObjectsScript.isDragging = true;
@@ -59,6 +67,9 @@ public class DragAndDropScript : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (blockDraggingUntilMouseUp)
+            return;
+
         if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             Vector3 cursScreenPoint =
@@ -92,17 +103,25 @@ public class DragAndDropScript : MonoBehaviour,
         }
     }
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void CancelDrag()
     {
+        GameObjectsScript.isDragging = false;
+        GameObjectsScript.lastDragged = null;
 
+        if (canvasGroup != null)
+        {
+            canvasGroup.blocksRaycasts = true;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (blockDraggingUntilMouseUp && Input.GetMouseButtonUp(0))
+        {
+            blockDraggingUntilMouseUp = false;
 
+            Debug.Log("Mouse released - dragging enabled again.");
+        }
     }
+
 }

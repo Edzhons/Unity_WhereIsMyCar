@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 10639848}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 51966773}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 78528969}
   - component: {fileID: 78528968}
   - component: {fileID: 78528967}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 87835919}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 141243092}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 148843034}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPlaceSpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 150488391}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 170824223}
   - component: {fileID: 170824224}
   - component: {fileID: 170824225}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 266762103}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 301442823}
   - component: {fileID: 301442822}
   - component: {fileID: 301442821}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PolicijaPlace
   m_TagString: Policija
   m_Icon: {fileID: 0}
@@ -976,7 +976,7 @@ GameObject:
   - component: {fileID: 315138232}
   - component: {fileID: 315138231}
   - component: {fileID: 315138230}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CementaMasina
   m_TagString: CementaMasina
   m_Icon: {fileID: 0}
@@ -1075,7 +1075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 343987283}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 385641701}
   - component: {fileID: 385641700}
   - component: {fileID: 385641699}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: B2
   m_TagString: B2
   m_Icon: {fileID: 0}
@@ -1331,7 +1331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 414594859}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1619,7 +1619,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 474744293}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1802,7 +1802,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 503885666}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1992,7 +1992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540147943}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2031,7 +2031,7 @@ GameObject:
   - component: {fileID: 546431179}
   - component: {fileID: 546431178}
   - component: {fileID: 546431177}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SchoolBusPlace
   m_TagString: School
   m_Icon: {fileID: 0}
@@ -2258,7 +2258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 577315230}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2452,7 +2452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 637974946}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2487,7 +2487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 642910963}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2522,7 +2522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 663122776}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2561,7 +2561,7 @@ GameObject:
   - component: {fileID: 691988026}
   - component: {fileID: 691988025}
   - component: {fileID: 691988024}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ambulance
   m_TagString: Ambulance
   m_Icon: {fileID: 0}
@@ -2660,7 +2660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 717209964}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarSpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2712,7 +2712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796041294}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2876,7 +2876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 812458935}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3072,7 +3072,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 890904814}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3247,7 +3247,7 @@ GameObject:
   - component: {fileID: 922156046}
   - component: {fileID: 922156045}
   - component: {fileID: 922156044}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Traktors5Place
   m_TagString: Traktors5
   m_Icon: {fileID: 0}
@@ -3345,7 +3345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 963497437}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3380,7 +3380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981161263}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3417,7 +3417,7 @@ GameObject:
   - component: {fileID: 984630042}
   - component: {fileID: 984630044}
   - component: {fileID: 984630043}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3494,7 +3494,7 @@ GameObject:
   - component: {fileID: 1002962662}
   - component: {fileID: 1002962661}
   - component: {fileID: 1002962660}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Policija
   m_TagString: Policija
   m_Icon: {fileID: 0}
@@ -3745,7 +3745,7 @@ GameObject:
   - component: {fileID: 1110796710}
   - component: {fileID: 1110796709}
   - component: {fileID: 1110796708}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CementaMasinaPlace
   m_TagString: CementaMasina
   m_Icon: {fileID: 0}
@@ -3847,7 +3847,7 @@ GameObject:
   - component: {fileID: 1116340654}
   - component: {fileID: 1116340653}
   - component: {fileID: 1116340652}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Traktors5
   m_TagString: Traktors5
   m_Icon: {fileID: 0}
@@ -3946,7 +3946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140797070}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4192,7 +4192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234515033}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4227,7 +4227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1327819738}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4262,7 +4262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1354429976}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4297,7 +4297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378312018}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4336,7 +4336,7 @@ GameObject:
   - component: {fileID: 1381426551}
   - component: {fileID: 1381426550}
   - component: {fileID: 1381426549}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Traktors
   m_TagString: Traktors
   m_Icon: {fileID: 0}
@@ -4439,7 +4439,7 @@ GameObject:
   - component: {fileID: 1393765961}
   - component: {fileID: 1393765960}
   - component: {fileID: 1393765959}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ugunsdzeseji
   m_TagString: Ugunsdzeseji
   m_Icon: {fileID: 0}
@@ -4538,7 +4538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448054427}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4577,7 +4577,7 @@ GameObject:
   - component: {fileID: 1454749957}
   - component: {fileID: 1454749956}
   - component: {fileID: 1454749955}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: EskavatorsPlace
   m_TagString: Eskavators
   m_Icon: {fileID: 0}
@@ -4675,7 +4675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1475927718}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4710,7 +4710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1477039115}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4826,7 +4826,7 @@ GameObject:
   - component: {fileID: 1496466838}
   - component: {fileID: 1496466840}
   - component: {fileID: 1496466839}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimerBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1507798523}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4934,7 +4934,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1515014011}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4973,7 +4973,7 @@ GameObject:
   - component: {fileID: 1532810036}
   - component: {fileID: 1532810035}
   - component: {fileID: 1532810034}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TraktorsPlace
   m_TagString: Traktors
   m_Icon: {fileID: 0}
@@ -5071,7 +5071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1560833973}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5106,7 +5106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627135470}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlacePoint06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5352,7 +5352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1676606219}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5391,7 +5391,7 @@ GameObject:
   - component: {fileID: 1699050519}
   - component: {fileID: 1699050518}
   - component: {fileID: 1699050517}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: E61
   m_TagString: E61
   m_Icon: {fileID: 0}
@@ -5569,7 +5569,7 @@ GameObject:
   - component: {fileID: 1816661011}
   - component: {fileID: 1816661010}
   - component: {fileID: 1816661013}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GarbageTruck
   m_TagString: Garbage
   m_Icon: {fileID: 0}
@@ -5672,7 +5672,7 @@ GameObject:
   - component: {fileID: 1825595982}
   - component: {fileID: 1825595981}
   - component: {fileID: 1825595980}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: UgunsdzesejiPlace
   m_TagString: Ugunsdzeseji
   m_Icon: {fileID: 0}
@@ -5770,7 +5770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1857223166}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5809,7 +5809,7 @@ GameObject:
   - component: {fileID: 1859522908}
   - component: {fileID: 1859522907}
   - component: {fileID: 1859522906}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: B2Place
   m_TagString: B2
   m_Icon: {fileID: 0}
@@ -5911,7 +5911,7 @@ GameObject:
   - component: {fileID: 1895821628}
   - component: {fileID: 1895821627}
   - component: {fileID: 1895821626}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Eskavators
   m_TagString: Eskavators
   m_Icon: {fileID: 0}
@@ -6014,7 +6014,7 @@ GameObject:
   - component: {fileID: 1988018882}
   - component: {fileID: 1988018881}
   - component: {fileID: 1988018880}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: AmbulancePlace
   m_TagString: Ambulance
   m_Icon: {fileID: 0}
@@ -6116,7 +6116,7 @@ GameObject:
   - component: {fileID: 2010168900}
   - component: {fileID: 2010168899}
   - component: {fileID: 2010168898}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: E46
   m_TagString: E46
   m_Icon: {fileID: 0}
@@ -6215,7 +6215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2011570412}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CarPoint05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6329,7 +6329,7 @@ GameObject:
   - component: {fileID: 2081511457}
   - component: {fileID: 2081511456}
   - component: {fileID: 2081511455}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SchoolBus
   m_TagString: School
   m_Icon: {fileID: 0}
@@ -6432,7 +6432,7 @@ GameObject:
   - component: {fileID: 2119845193}
   - component: {fileID: 2119845192}
   - component: {fileID: 2119845191}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: E61Place
   m_TagString: E61
   m_Icon: {fileID: 0}
@@ -6534,7 +6534,7 @@ GameObject:
   - component: {fileID: 2122169845}
   - component: {fileID: 2122169844}
   - component: {fileID: 2122169843}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GarbageTruckPlace
   m_TagString: Garbage
   m_Icon: {fileID: 0}
@@ -6636,7 +6636,7 @@ GameObject:
   - component: {fileID: 2135810092}
   - component: {fileID: 2135810091}
   - component: {fileID: 2135810090}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: E46Place
   m_TagString: E46
   m_Icon: {fileID: 0}

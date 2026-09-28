@@ -83,13 +83,23 @@ public class FlyingObjectControllerScript : MonoBehaviour
             rectTransform, Input.mousePosition, Camera.main))
         {
             Debug.Log("The cursor collided with a flying object!");
-            if(GameObjectsScript.lastDragged != null)
+            if (GameObjectsScript.lastDragged != null)
             {
                 FindFirstObjectByType<GameManagerScript>()
-                    .LoseLife(); // Juu
-                StartCoroutine(ShrinkAndRespawn(GameObjectsScript.lastDragged, 0.5f));
-                GameObjectsScript.lastDragged = null;
+                    .LoseLife();
+
+                GameObject hitCar = GameObjectsScript.lastDragged;
+
+                // Completely stop the current drag
                 GameObjectsScript.isDragging = false;
+                GameObjectsScript.lastDragged = null;
+
+                // Block all new dragging until LMB is released
+                DragAndDropScript.blockDraggingUntilMouseUp = true;
+
+                StartCoroutine(
+                    ShrinkAndRespawn(hitCar, 0.5f)
+                );
             }
 
             if (CompareTag("Bomb"))
