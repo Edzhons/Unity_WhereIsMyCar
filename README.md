@@ -69,15 +69,15 @@ Tādējādi katra spēles palaišana veido atšķirīgu puzles konfigurāciju.
 
 ### Sākuma ekrāns
 
-![Galvenā spēle](Assets/startMenu.png)
+![Galvenā spēle](Assets/startMenu.PNG)
 
 ### Spēles piemērs
 
-![Spēles piemērs](Assets/gameplay.png)
+![Spēles piemērs](Assets/gameplay.PNG)
 
 ### Uzvaras ekrāns
 
-![Pareizi novietota automašīna](Assets/winPopup.png)
+![Pareizi novietota automašīna](Assets/winPopup.PNG)
 
 ---
 
