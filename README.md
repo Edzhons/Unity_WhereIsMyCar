@@ -161,14 +161,13 @@ Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
 
 ## 🏠 Sākuma izvēlne
 
-- [ ] Izveidot sākuma izvēlni
-- [ ] Pievienot **Spēlēt** pogu
-- [ ] Pievienot **Iziet** pogu
-- [ ] Pievienot spēles nosaukumu
-- [ ] Izveidot sākuma izvēlnes fonu
-- [ ] Savienot **Spēlēt** pogu ar spēles ainu
-- [ ] Savienot **Iziet** pogu ar programmas aizvēršanu
-- [ ] Pārbaudīt ainu pārslēgšanu
+- [x] Izveidot sākuma izvēlni
+- [x] Pievienot **Līmenis 1** pogu
+- [x] Pievienot **Iziet** pogu
+- [x] Izveidot sākuma izvēlnes fonu
+- [x] Savienot **Līmenis 1** pogu ar spēles ainu
+- [x] Savienot **Iziet** pogu ar programmas aizvēršanu
+- [x] Pārbaudīt ainu pārslēgšanu
 
 ---
 
@@ -177,48 +176,42 @@ Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
 - [x] Automašīnas mijiedarbības skaņa
 - [x] Pareizas novietošanas skaņa
 - [x] Nepareizas novietošanas skaņa
-- [ ] Pievienot sākuma izvēlnes mūziku
-- [ ] Pievienot spēles fona mūziku
-- [ ] Pievienot pogu skaņas
-- [ ] Pievienot skaļuma regulēšanu
-- [ ] Pievienot skaņas izslēgšanas iespēju
+- [x] Pievienot sākuma izvēlnes mūziku
+- [x] Pievienot spēles fona mūziku
+- [x] Pievienot pogu skaņas
+- [x] Pievienot skaņas izslēgšanas iespēju
 
 ---
 
 ## ✨ Animācijas un vizuālie efekti
 
-- [ ] Pievienot pogu animācijas
-- [ ] Pievienot pogu nospiešanas animācijas
-- [ ] Pievienot automašīnas vilkšanas animāciju
-- [ ] Pievienot pareizas novietošanas animāciju
-- [ ] Pievienot vizuālu reakciju nepareizas novietošanas gadījumā
-- [ ] Pievienot pārejas animāciju starp izvēlni un spēli
-- [ ] Pievienot spēles pabeigšanas animāciju
-- [ ] Pievienot nelielas kartes/vides animācijas
+- [x] Pievienot pogu animācijas
+- [x] Pievienot pogu nospiešanas animācijas
+- [x] Pievienot pareizas novietošanas animāciju
+- [x] Pievienot vizuālu reakciju nepareizas novietošanas gadījumā
+- [x] Pievienot nelielas kartes/vides animācijas
 
 ---
 
 ## 🏆 Spēles pabeigšana
 
-- [ ] Noteikt, kad visas automašīnas ir pareizi novietotas
-- [ ] Izveidot spēles pabeigšanas ekrānu/paziņojumu
-- [ ] Pievienot pabeigšanas skaņu
-- [ ] Pievienot iespēju sākt puzli no jauna
-- [ ] Pievienot iespēju atgriezties sākuma izvēlnē
+- [x] Noteikt, kad visas automašīnas ir pareizi novietotas
+- [x] Izveidot spēles pabeigšanas ekrānu/paziņojumu
+- [x] Pievienot pabeigšanas skaņu
+- [x] Pievienot iespēju sākt puzli no jauna
+- [x] Pievienot iespēju atgriezties sākuma izvēlnē
 
 ---
 
 ## ⚙️ Uzlabošana un noslēdzošā izstrāde
 
-- [ ] Uzlabot lietotāja saskarni
-- [ ] Pievienot vizuālu norādi izvēlētajai automašīnai
-- [ ] Uzlabot nepareizas novietošanas vizuālo reakciju
-- [ ] Pārbaudīt spēli dažādās ekrāna izšķirtspējās
-- [ ] Pārbaudīt dažādus ekrāna malu attiecību formātus
-- [ ] Novērst atlikušos Unity brīdinājumus/kļūdas, ja tie ietekmē spēli
-- [ ] Veikt pilnu spēles testēšanu
-- [ ] Izveidot gala `.exe` versiju
-- [ ] Pārbaudīt gala versiju uz cita datora
+- [x] Uzlabot lietotāja saskarni
+- [x] Pievienot vizuālu norādi izvēlētajai automašīnai
+- [x] Uzlabot nepareizas novietošanas vizuālo reakciju
+- [x] Pārbaudīt spēli dažādās ekrāna izšķirtspējās
+- [x] Pārbaudīt dažādus ekrāna malu attiecību formātus
+- [x] Novērst atlikušos Unity brīdinājumus/kļūdas, ja tie ietekmē spēli
+- [x] Veikt pilnu spēles testēšanu
 
 ---
 
