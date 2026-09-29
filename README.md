@@ -67,17 +67,17 @@ Tādējādi katra spēles palaišana veido atšķirīgu puzles konfigurāciju.
 
 ## 🖼️ Ekrānattēli
 
-### Galvenā spēle
+### Sākuma ekrāns
 
-<!-- Ievieto ekrānattēlu šeit -->
+![Galvenā spēle](Assets/startMenu.png)
 
 ### Spēles piemērs
 
-<!-- Ievieto ekrānattēlu šeit -->
+![Spēles piemērs](Assets/gameplay.png)
 
-### Pareizi novietota automašīna
+### Uzvaras ekrāns
 
-<!-- Ievieto ekrānattēlu šeit -->
+![Pareizi novietota automašīna](Assets/winPopup.png)
 
 ---
 
