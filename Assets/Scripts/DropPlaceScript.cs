@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,7 +25,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 placeZRot =
                     eventData.pointerDrag.GetComponent<RectTransform>().transform.eulerAngles.z;
                 carZRot = GetComponent<RectTransform>().transform.eulerAngles.z;
-                diffZRot = Mathf.Abs(placeZRot - carZRot);
+                diffZRot = Mathf.Abs(Mathf.DeltaAngle(placeZRot, carZRot));
                 Debug.Log("Diff Z Rot: " + diffZRot);
 
                 placeSize = eventData.pointerDrag.GetComponent<RectTransform>().localScale;
@@ -39,22 +40,17 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 Debug.Log("Diff X Size: " + xSizeDiff);
                 Debug.Log("Diff Y Size: " + ySizeDiff);
 
-                if ((diffZRot <= 7 || (diffZRot >= 353 && diffZRot <= 360)) &&
-                    (xSizeDiff <= 0.08f && ySizeDiff <= 0.08f) &&
+                if (diffZRot <= 15 &&
+                    (xSizeDiff <= 0.15f && ySizeDiff <= 0.15f) &&
                     (placeMirrored == carMirrored))
                 {
                     Debug.Log("Car placed correctly!");
                     gameObjectsScript.inRightPlace = true;
                     FindFirstObjectByType<GameManagerScript>()
                         .CorrectCarPlaced(); // Juu
-                    eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition =
-                        GetComponent<RectTransform>().anchoredPosition;
-
-                    eventData.pointerDrag.GetComponent<RectTransform>().localScale =
-                        GetComponent<RectTransform>().localScale;
-
-                    eventData.pointerDrag.GetComponent<RectTransform>().localRotation =
-                        GetComponent<RectTransform>().localRotation;
+                    
+                    // Goofy successful placement animation
+                    StartCoroutine(CorrectPlaceAnimation(eventData.pointerDrag));
 
                     switch (eventData.pointerDrag.tag)
                     {
@@ -168,5 +164,147 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 }
             }
         }
+    }
+    private IEnumerator CorrectPlaceAnimation(GameObject car)
+    {
+        RectTransform carRect = car.GetComponent<RectTransform>();
+        RectTransform placeRect = GetComponent<RectTransform>();
+
+        // Final values
+        Vector3 finalPosition = placeRect.position;
+        Vector3 finalScale = placeRect.localScale;
+        float finalRotation = placeRect.eulerAngles.z;
+
+        // Starting values
+        Vector3 startPosition = carRect.position;
+        Vector3 startScale = carRect.localScale;
+        float startRotation = carRect.eulerAngles.z;
+
+        // Find the CENTER of the canvas
+        Canvas canvas = carRect.GetComponentInParent<Canvas>();
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+        Vector3 centerPosition = canvasRect.TransformPoint(canvasRect.rect.center);
+
+        // How huge the car gets
+        Vector3 hugeScale = new Vector3(
+            startScale.x * 15f,
+            startScale.y * 15f,
+            startScale.z
+        );
+
+        // -------------------------
+        // PHASE 1: FLY TO CENTER
+        // -------------------------
+
+        float moveToCenterDuration = 0.8f;
+        float elapsed = 0f;
+
+        while (elapsed < moveToCenterDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / moveToCenterDuration);
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            // Move to center
+            carRect.position = Vector3.Lerp(
+                startPosition,
+                centerPosition,
+                smoothT
+            );
+
+            // Grow MASSIVELY
+            carRect.localScale = Vector3.Lerp(
+                startScale,
+                hugeScale,
+                smoothT
+            );
+
+            // Spin + flip
+            float zRotation = Mathf.Lerp(
+                startRotation,
+                startRotation + 360f,
+                smoothT
+            );
+
+            float yRotation = Mathf.Lerp(
+                0f,
+                720f,
+                smoothT
+            );
+
+            carRect.rotation = Quaternion.Euler(
+                0f,
+                yRotation,
+                zRotation
+            );
+
+            yield return null;
+        }
+
+        // Make sure it's exactly centered
+        carRect.position = centerPosition;
+        carRect.localScale = hugeScale;
+
+        // -------------------------
+        // PHASE 2: STAY HUGE
+        // -------------------------
+
+        yield return new WaitForSeconds(0.3f);
+
+        // -------------------------
+        // PHASE 3: FLY BACK TO PLACE
+        // -------------------------
+
+        elapsed = 0f;
+
+        float returnDuration = 1.0f;
+
+        // Current rotation after the crazy part
+        Quaternion currentRotation = carRect.rotation;
+
+        while (elapsed < returnDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / returnDuration);
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            // Fly back to parking place
+            carRect.position = Vector3.Lerp(
+                centerPosition,
+                finalPosition,
+                smoothT
+            );
+
+            // Shrink back down
+            carRect.localScale = Vector3.Lerp(
+                hugeScale,
+                finalScale,
+                smoothT
+            );
+
+            // Smoothly rotate into correct orientation
+            carRect.rotation = Quaternion.Lerp(
+                currentRotation,
+                Quaternion.Euler(0f, 0f, finalRotation),
+                smoothT
+            );
+
+            yield return null;
+        }
+
+        // -------------------------
+        // FINALIZE
+        // -------------------------
+
+        carRect.position = finalPosition;
+        carRect.localScale = finalScale;
+        carRect.rotation = Quaternion.Euler(
+            0f,
+            0f,
+            finalRotation
+        );
     }
 }
