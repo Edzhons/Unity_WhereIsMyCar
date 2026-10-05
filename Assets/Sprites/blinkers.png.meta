@@ -410,7 +410,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blinkers_0: -9169514974840885482
+      blinkers_1: -2371426945790385358
+      blinkers_10: -8641714240209998651
+      blinkers_2: 1473042690716674617
+      blinkers_3: -8243419482869641362
+      blinkers_4: -2312850568037770445
+      blinkers_5: 6414570347451960367
+      blinkers_6: -8904716488323051735
+      blinkers_7: 956843193478815444
+      blinkers_8: -6497235244809552027
+      blinkers_9: -7929200308840436298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
