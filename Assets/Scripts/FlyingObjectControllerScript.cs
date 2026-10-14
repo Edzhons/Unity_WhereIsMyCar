@@ -56,14 +56,14 @@ public class FlyingObjectControllerScript : MonoBehaviour
         rectTransform.anchoredPosition +=
            new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
 
-        if (speed > 0 && transform.position.x < (screenBoundaryScript.minX + 80)
+        if (speed > 0 && transform.position.x < (screenBoundaryScript.worldBounds.xMin + 80)
             && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
             isFadingOut = true;
         }
 
-        if (speed < 0 && transform.position.x > (screenBoundaryScript.maxX - 80)
+        if (speed < 0 && transform.position.x > (screenBoundaryScript.worldBounds.xMax - 80)
             && !isFadingOut)
         {
             StartCoroutine(FadeOutAndDestroy());
@@ -110,6 +110,23 @@ public class FlyingObjectControllerScript : MonoBehaviour
                 StartAndDestroy(Color.cyan);
         }
 
+    }
+
+    bool TryGetInputPosition(out Vector2 inputPosition)
+    {
+        #if UNITY_EDITOR || UNITY_STANDALONE
+                inputPosition = Input.mousePosition;
+                return true;
+        #elif UNITY_ADROID
+            if (Input.touchCount >0)
+            {
+                inputPosition = Input.GetTouch(0).position;
+                return true;
+            } else {
+                inputPosition = Vector2.zero;
+                return false;
+            }
+        #endif
     }
 
     IEnumerator ShrinkAndRespawn(GameObject obj, float duration)
@@ -209,6 +226,10 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     IEnumerator Vibrate()
     {
+        #if UNITY_ADROID
+            HandHeld.Vibrate();
+        #endif
+        
         Vector2 originalPos = rectTransform.anchoredPosition;
         float duration = 0.4f;
         float elapsed = 0f;

@@ -5,97 +5,109 @@ public class DragAndDropScript : MonoBehaviour,
     IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public GameObjectsScript gameObjectsScript;
-    private CanvasGroup canvasGroup;
-    private RectTransform rectTransform;
     public ScreenBoundaryScript screenBoundaryScript;
 
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+    private Camera mainCamera;
+    private Vector3 dragOffsetWorld;
+
+    // Used by the flying-object collision script to prevent an immediate re-drag.
     public static bool blockDraggingUntilMouseUp = false;
 
-    void Awake()
+    private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
+
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
-        {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        }
 
-        rectTransform = GetComponent<RectTransform>();
-        gameObjectsScript = Object.FindFirstObjectByType<GameObjectsScript>();
-        screenBoundaryScript = Object.FindFirstObjectByType<ScreenBoundaryScript>();
+        if (gameObjectsScript == null)
+            gameObjectsScript = FindFirstObjectByType<GameObjectsScript>();
+
+        if (screenBoundaryScript == null)
+            screenBoundaryScript = FindFirstObjectByType<ScreenBoundaryScript>();
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+        mainCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+            ? canvas.worldCamera
+            : Camera.main;
+
+        if (rectTransform == null)
+            Debug.LogError("DragAndDropScript needs a RectTransform on " + gameObject.name);
+        if (screenBoundaryScript == null)
+            Debug.LogWarning("ScreenBoundaryScript was not found in the scene.");
+        if (gameObjectsScript == null)
+            Debug.LogWarning("GameObjectsScript was not found in the scene.");
     }
-
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (gameObjectsScript != null &&
+            gameObjectsScript.carSoundSource != null &&
+            gameObjectsScript.sounds != null &&
+            gameObjectsScript.sounds.Length > 0 &&
+            gameObjectsScript.sounds[0] != null)
         {
-            Debug.Log("Left mouse button clicked on " + gameObject.name);
             gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[0]);
         }
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (blockDraggingUntilMouseUp)
+        if (blockDraggingUntilMouseUp || rectTransform == null)
             return;
 
-        if (!Input.GetMouseButton(0))
+        if (!TryScreenToWorldPoint(eventData.position, out Vector3 pointerWorldPosition))
             return;
 
-        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        GameObjectsScript.isDragging = true;
+        GameObjectsScript.lastDragged = eventData.pointerDrag;
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        if (transform.parent != null)
         {
-            GameObjectsScript.isDragging = true;
-            canvasGroup.alpha = 0.6f;
-            canvasGroup.blocksRaycasts = false;
             int lastIndex = transform.parent.childCount - 1;
-            int positionIndex = Mathf.Max(0, lastIndex - 1);
-            transform.SetSiblingIndex(positionIndex);
-
-            Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(
-                Input.mousePosition.x, Input.mousePosition.y,
-                screenBoundaryScript.screenPoint.z));
-            rectTransform.position = cursorWorldPos;
-            screenBoundaryScript.screenPoint =
-                Camera.main.WorldToScreenPoint(rectTransform.localPosition);
-
-            screenBoundaryScript.offset = rectTransform.localPosition -
-                Camera.main.ScreenToWorldPoint(new Vector3(
-                    Input.mousePosition.x, Input.mousePosition.y,
-                    screenBoundaryScript.screenPoint.z));
-            GameObjectsScript.lastDragged = eventData.pointerDrag;
+            transform.SetSiblingIndex(Mathf.Max(0, lastIndex - 1));
         }
+
+        dragOffsetWorld = transform.position - pointerWorldPosition;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (blockDraggingUntilMouseUp)
+        if (blockDraggingUntilMouseUp || rectTransform == null)
             return;
 
-        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
-        {
-            Vector3 cursScreenPoint =
-              new Vector3(Input.mousePosition.x,
-              Input.mousePosition.y,
-              screenBoundaryScript.screenPoint.z);
-            Vector3 curPosition
-                = Camera.main.ScreenToWorldPoint(cursScreenPoint) +
-                  screenBoundaryScript.offset;
+        // PointerEventData supports both mouse and touchscreen dragging.
+        if (!TryScreenToWorldPoint(eventData.position, out Vector3 pointerWorldPosition))
+            return;
 
-            rectTransform.position = screenBoundaryScript.GetClampedPosition(curPosition);
-        }
+        Vector3 targetPosition = pointerWorldPosition + dragOffsetWorld;
+        if (screenBoundaryScript != null)
+            targetPosition = screenBoundaryScript.GetClampedPosition(targetPosition);
+
+        rectTransform.position = targetPosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (Input.GetMouseButtonUp(0))
+        GameObjectsScript.isDragging = false;
+
+        if (canvasGroup != null)
         {
-            GameObjectsScript.isDragging = false;
-            Debug.Log("OnEndDrag called for " + gameObject.name);
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
+        }
 
+        if (gameObjectsScript != null)
+        {
             if (gameObjectsScript.inRightPlace)
             {
-                canvasGroup.blocksRaycasts = false;
+                if (canvasGroup != null)
+                    canvasGroup.blocksRaycasts = false;
                 GameObjectsScript.lastDragged = null;
             }
 
@@ -110,18 +122,32 @@ public class DragAndDropScript : MonoBehaviour,
 
         if (canvasGroup != null)
         {
+            canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
         }
     }
 
-    void Update()
+    private void Update()
     {
+        // Unity maps the primary touch to pointer/button 0 on supported input setups.
         if (blockDraggingUntilMouseUp && Input.GetMouseButtonUp(0))
-        {
             blockDraggingUntilMouseUp = false;
-
-            Debug.Log("Mouse released - dragging enabled again.");
-        }
     }
 
+    private bool TryScreenToWorldPoint(Vector2 screenPosition, out Vector3 worldPosition)
+    {
+        worldPosition = Vector3.zero;
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+        if (mainCamera == null)
+            return false;
+
+        float depth = screenBoundaryScript != null
+            ? screenBoundaryScript.screenPoint.z
+            : Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+        worldPosition = mainCamera.ScreenToWorldPoint(
+            new Vector3(screenPosition.x, screenPosition.y, depth));
+        return true;
+    }
 }
