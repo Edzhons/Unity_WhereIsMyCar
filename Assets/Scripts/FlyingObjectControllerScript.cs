@@ -119,7 +119,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
             GameObjectsScript.lastDragged = null;
             GameObjectsScript.isDragging = false;
 
-            StartCoroutine(ShrinkAndDestroy(hitCar, 0.5f));
+            StartCoroutine(ShrinkAndRespawn(hitCar, 0.5f));
 
             // Keep the existing flying-object effects.
             if (CompareTag("Bomb"))
@@ -149,23 +149,62 @@ public class FlyingObjectControllerScript : MonoBehaviour
 #endif
     }
 
-    IEnumerator ShrinkAndDestroy(GameObject obj, float duration)
+
+    IEnumerator ShrinkAndRespawn(GameObject obj, float duration)
     {
+        if (obj == null)
+            yield break;
+
         Vector3 originalScale = obj.transform.localScale;
-        Quaternion orginamRotation = obj.transform.rotation;
+        Quaternion originalRotation = obj.transform.rotation;
         float time = 0f;
 
+        // Keep the existing shrink-and-spin animation.
         while (time < duration)
         {
+            if (obj == null)
+                yield break;
+
             time += Time.deltaTime;
-            obj.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, time / duration);
-            float angle = Mathf.Lerp(0f, 360f, time / duration);
-            obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            float t = Mathf.Clamp01(time / duration);
+
+            obj.transform.localScale =
+                Vector3.Lerp(originalScale, Vector3.zero, t);
+
+            float angle = Mathf.Lerp(0f, 360f, t);
+            obj.transform.rotation =
+                originalRotation * Quaternion.Euler(0f, 0f, angle);
 
             yield return null;
         }
-        Destroy(obj);
+
+        // Restore the car instead of destroying it.
+        if (gameObjectsScript == null)
+            gameObjectsScript = FindFirstObjectByType<GameObjectsScript>();
+
+        if (gameObjectsScript != null)
+        {
+            gameObjectsScript.RandomizeSingleCar(obj);
+
+            CanvasGroup carCanvasGroup = obj.GetComponent<CanvasGroup>();
+
+            if (carCanvasGroup != null)
+            {
+                carCanvasGroup.alpha = 1f;
+                carCanvasGroup.blocksRaycasts = true;
+                carCanvasGroup.interactable = true;
+            }
+
+            obj.SetActive(true);
+
+            Debug.Log("Car respawned: " + obj.name);
+        }
+        else
+        {
+            Debug.LogError("Cannot respawn car: GameObjectsScript not found.");
+        }
     }
+
 
     public void TriggerExplosion()
     {

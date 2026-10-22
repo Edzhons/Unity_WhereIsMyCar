@@ -127,11 +127,24 @@ public class DragAndDropScript : MonoBehaviour,
         }
     }
 
-    private void Update()
+    void Update()
     {
-        // Unity maps the primary touch to pointer/button 0 on supported input setups.
-        if (blockDraggingUntilMouseUp && Input.GetMouseButtonUp(0))
+        if (!blockDraggingUntilMouseUp)
+            return;
+
+#if UNITY_ANDROID
+        if (Input.touchCount == 0)
+        {
             blockDraggingUntilMouseUp = false;
+            Debug.Log("Touch released - dragging enabled.");
+        }
+#else
+    if (Input.GetMouseButtonUp(0))
+    {
+        blockDraggingUntilMouseUp = false;
+        Debug.Log("Mouse released - dragging enabled.");
+    }
+#endif
     }
 
     private bool TryScreenToWorldPoint(Vector2 screenPosition, out Vector3 worldPosition)
