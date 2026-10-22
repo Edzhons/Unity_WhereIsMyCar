@@ -70,42 +70,60 @@ public class FlyingObjectControllerScript : MonoBehaviour
             isFadingOut = true;
         }
 
+        // For Android
+        Vector2 inputPosition;
+        if (!TryGetInputPosition(out inputPosition))
+            return;
+
+        if (inputPosition.x < 0 || inputPosition.x > Screen.width ||
+            inputPosition.y < 0 || inputPosition.y > Screen.height ||
+            Camera.main == null)
+            return;
+
+
+
         if (CompareTag("Bomb") && !isExploading &&
             RectTransformUtility.RectangleContainsScreenPoint(
-                rectTransform, Input.mousePosition, Camera.main))
+                rectTransform, inputPosition, Camera.main))
         {
             Debug.Log("The cursor collided with a bomb!");
             TriggerExplosion();
         }
 
-        if(GameObjectsScript.isDragging && !isFadingOut && 
+
+        if (GameObjectsScript.isDragging &&
+            GameObjectsScript.lastDragged != null &&
+            !isFadingOut &&
             RectTransformUtility.RectangleContainsScreenPoint(
-            rectTransform, Input.mousePosition, Camera.main))
+                rectTransform, inputPosition, Camera.main))
         {
             Debug.Log("The cursor collided with a flying object!");
-            if (GameObjectsScript.lastDragged != null)
+
+            // Save the car before clearing the drag reference.
+            GameObject hitCar = GameObjectsScript.lastDragged;
+
+            // Remove one life.
+            GameManagerScript gameManager =
+                FindFirstObjectByType<GameManagerScript>();
+
+            if (gameManager != null)
             {
-                FindFirstObjectByType<GameManagerScript>()
-                    .LoseLife();
-
-                GameObject hitCar = GameObjectsScript.lastDragged;
-
-                // Completely stop the current drag
-                GameObjectsScript.isDragging = false;
-                GameObjectsScript.lastDragged = null;
-
-                // Block all new dragging until LMB is released
-                DragAndDropScript.blockDraggingUntilMouseUp = true;
-
-                StartCoroutine(
-                    ShrinkAndRespawn(hitCar, 0.5f)
-                );
+                gameManager.LoseLife();
+            }
+            else
+            {
+                Debug.LogError("GameManagerScript was not found!");
             }
 
-            if (CompareTag("Bomb"))
-            
-                StartAndDestroy(Color.red);
+            // Stop dragging and play the existing car-hit animation.
+            GameObjectsScript.lastDragged = null;
+            GameObjectsScript.isDragging = false;
 
+            StartCoroutine(ShrinkAndDestroy(hitCar, 0.5f));
+
+            // Keep the existing flying-object effects.
+            if (CompareTag("Bomb"))
+                StartAndDestroy(Color.red);
             else
                 StartAndDestroy(Color.cyan);
         }
@@ -114,81 +132,39 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     bool TryGetInputPosition(out Vector2 inputPosition)
     {
-        #if UNITY_EDITOR || UNITY_STANDALONE
-                inputPosition = Input.mousePosition;
-                return true;
-        #elif UNITY_ADROID
-            if (Input.touchCount >0)
-            {
-                inputPosition = Input.GetTouch(0).position;
-                return true;
-            } else {
-                inputPosition = Vector2.zero;
-                return false;
-            }
-        #endif
+#if UNITY_EDITOR || UNITY_STANDALONE
+        inputPosition = Input.mousePosition;
+        return true;
+
+#elif UNITY_ANDROID
+                if (Input.touchCount > 0)
+                {
+                    inputPosition = Input.GetTouch(0).position;
+                    return true;
+                
+                } else {
+                    inputPosition = Vector2.zero;
+                    return false;
+                }
+#endif
     }
 
-    IEnumerator ShrinkAndRespawn(GameObject obj, float duration)
+    IEnumerator ShrinkAndDestroy(GameObject obj, float duration)
     {
         Vector3 originalScale = obj.transform.localScale;
-
+        Quaternion orginamRotation = obj.transform.rotation;
         float time = 0f;
 
         while (time < duration)
         {
             time += Time.deltaTime;
-
-            float progress = time / duration;
-
-            // Shrink
-            obj.transform.localScale =
-                Vector3.Lerp(
-                    originalScale,
-                    Vector3.zero,
-                    progress
-                );
-
-            // Rotate
-            float angle =
-                Mathf.Lerp(0f, 360f, progress);
-
-            obj.transform.rotation =
-                Quaternion.Euler(0f, 0f, angle);
+            obj.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, time / duration);
+            float angle = Mathf.Lerp(0f, 360f, time / duration);
+            obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
             yield return null;
         }
-
-
-        // =========================
-        // RANDOMIZE CAR AGAIN
-        // =========================
-
-        if (gameObjectsScript != null)
-        {
-            gameObjectsScript.RandomizeSingleCar(obj);
-        }
-
-
-        // =========================
-        // RESTORE CANVAS GROUP
-        // =========================
-
-        CanvasGroup canvasGroup =
-            obj.GetComponent<CanvasGroup>();
-
-        if (canvasGroup != null)
-        {
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
-        }
-
-
-        // =========================
-        // RESET OBJECT STATE
-        // =========================
-
-        obj.SetActive(true);
+        Destroy(obj);
     }
 
     public void TriggerExplosion()
@@ -197,7 +173,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
         if (gameObjectsScript.carSoundSource != null && gameObjectsScript.sounds != null)
         {
-            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[14], 5f);
+            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[6], 5f);
         }
 
         if (TryGetComponent<Animator>(out Animator animator))
@@ -208,7 +184,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
         if (image != null)
         {
             image.color = Color.red;
-            StartCoroutine(RecoverColor(0.4f));
+            StartCoroutine(RecoverColor(0.6f));
         }
 
         StartCoroutine(Vibrate());
@@ -226,10 +202,10 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     IEnumerator Vibrate()
     {
-        #if UNITY_ADROID
-            HandHeld.Vibrate();
-        #endif
-        
+#if UNITY_ANDROID
+        Handheld.Vibrate();
+#endif
+
         Vector2 originalPos = rectTransform.anchoredPosition;
         float duration = 0.4f;
         float elapsed = 0f;
@@ -293,7 +269,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
             StartCoroutine(Vibrate());
             if (gameObjectsScript.carSoundSource != null && gameObjectsScript.sounds != null)
             {
-                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[15]);
+                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[5]);
             }
         }
     }

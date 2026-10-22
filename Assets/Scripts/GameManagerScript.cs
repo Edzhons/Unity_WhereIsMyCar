@@ -182,7 +182,7 @@ public class GameManagerScript : MonoBehaviour
             audioSource.PlayOneShot(winSound);
         }
 
-        Time.timeScale = 0f;
+        FreezeGame();
 
         resultText.text = "UZVARA!";
 
@@ -217,9 +217,9 @@ public class GameManagerScript : MonoBehaviour
             audioSource.PlayOneShot(loseSound);
         }
 
-        Time.timeScale = 0f;
+        FreezeGame();
 
-        resultText.text = "SPĒLE BEIGUSIES";
+        resultText.text = "SPELE BEIGUSIES";
 
         finalTimeText.text =
             "Laiks: " +
@@ -304,5 +304,17 @@ public class GameManagerScript : MonoBehaviour
         Time.timeScale = 1f;
 
         SceneManager.LoadScene("StartMenu");
+    }
+
+    void FreezeGame()
+    {
+        Time.timeScale = 0f;
+
+        // Prevent camera movement or zoom while the result is shown.
+        CameraZoomScript cameraMovement =
+            FindFirstObjectByType<CameraZoomScript>();
+
+        if (cameraMovement != null)
+            cameraMovement.enabled = false;
     }
 }

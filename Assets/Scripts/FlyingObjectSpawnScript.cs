@@ -26,22 +26,43 @@ public class FlyingObjectSpawnScript : MonoBehaviour
     public float plainMaxSpeed = 100f;
 
 
+
     void Start()
     {
-        screenBoundaryScript = Object.FindFirstObjectByType<ScreenBoundaryScript>();
-        minY = screenBoundaryScript.worldBounds.yMin;
-        maxY = screenBoundaryScript.worldBounds.yMin;
+        screenBoundaryScript = FindFirstObjectByType<ScreenBoundaryScript>();
+
+        if (screenBoundaryScript == null)
+        {
+            Debug.LogError("ScreenBoundaryScript not found!");
+            return;
+        }
+
+        // Spawn within the middle 60% of the visible vertical area.
+        float screenMinY = screenBoundaryScript.worldBounds.yMin;
+        float screenMaxY = screenBoundaryScript.worldBounds.yMax;
+        float screenHeight = screenMaxY - screenMinY;
+
+        minY = screenMinY + screenHeight * 0.2f;
+        maxY = screenMinY + screenHeight * 0.8f;
+
         InvokeRepeating(nameof(SpawnCloud), 0f, cloudSpawnInterval);
         InvokeRepeating(nameof(SpawnPlain), 0f, plainSpawnInterval);
     }
+
 
     void SpawnCloud()
     {
         if (cloudPrefabs.Length == 0) return;
 
         GameObject prefab = cloudPrefabs[Random.Range(0, cloudPrefabs.Length)];
+
         float y = Random.Range(minY, maxY);
-        Vector3 pos = new Vector3(spawnPoint.position.x, y, spawnPoint.position.z);
+        Vector3 pos = new Vector3(
+            spawnPoint.position.x,
+            y,
+            spawnPoint.position.z
+        );
+
         GameObject cloud = Instantiate(prefab, pos, Quaternion.identity, spawnPoint);
         float speed = Random.Range(cloudMinSpeed, cloudMaxSpeed);
 
@@ -55,13 +76,22 @@ public class FlyingObjectSpawnScript : MonoBehaviour
     void SpawnPlain()
     {
         if (plainPrefabs.Length == 0) return;
+
         GameObject prefab = plainPrefabs[Random.Range(0, plainPrefabs.Length)];
+
         float y = Random.Range(minY, maxY);
-        Vector3 pos = new Vector3(-spawnPoint.position.x, y, spawnPoint.position.z);
+        Vector3 pos = new Vector3(
+            -spawnPoint.position.x,
+            y,
+            spawnPoint.position.z
+        );
+
         GameObject plain = Instantiate(prefab, pos, Quaternion.identity, spawnPoint);
         float speed = Random.Range(plainMinSpeed, plainMaxSpeed);
+
         FlyingObjectControllerScript controller =
             plain.GetComponent<FlyingObjectControllerScript>();
+
         if (controller != null)
             controller.speed = -speed;
     }
