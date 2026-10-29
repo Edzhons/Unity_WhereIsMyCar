@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b3279c8d8ae2b477f964975fceea1e7c
+guid: b22fc826eebc0432d88298e97de1d9b7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8602754330682618880
-    second: phone_shop_screen_0
+      213: 2130661667783566126
+    second: phone_glow_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: phone_shop_screen_0
+      name: phone_glow_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 92
-        height: 146
+        x: 27
+        y: 59
+        width: 113
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 00c85bdf380ec9880800000000000000
-      internalID: -8602754330682618880
+      spriteID: e23e7c48f71a19d10800000000000000
+      internalID: 2130661667783566126
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      phone_glow_0: 2130661667783566126
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

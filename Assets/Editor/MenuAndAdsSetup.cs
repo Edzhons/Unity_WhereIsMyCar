@@ -35,8 +35,7 @@ public static class MenuAndAdsSetup
     static readonly Color RowColor = new Color(1f, 1f, 1f, 0.09f);
     static readonly Color ButtonText = new Color(0.15f, 0.12f, 0.1f);
     static readonly Color Yellow = new Color(1f, 0.86f, 0.42f);
-    static readonly Color LcdBack = new Color(0.075f, 0.25f, 0.155f);
-    static readonly Color LcdText = new Color(0.62f, 0.95f, 0.5f);
+    static readonly Color LcdText = new Color(156 / 255f, 237 / 255f, 132 / 255f);   // like "CITY FM"
 
     static TMP_FontAsset font;
     static Sprite rounded;
@@ -98,22 +97,24 @@ public static class MenuAndAdsSetup
         AudioClip kachow = AssetDatabase.LoadAssetAtPath<AudioClip>(SOUNDS + "kachow_r22ZKsu.mp3");
         Sprite star = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/star.png");
 
-        // Second road sign, next to the painted "LIMENIS 1".
-        Image sign = Img("HanoiSign", canvas, Load(MENU_ART + "sign_hanoi.png"), new Vector2(-640, 205), new Vector2(460, 300));
+        // The painted "LIMENIS 1" sign in blue, standing on top of it (art made
+        // from the picture itself, so it lines up with it exactly).
+        Image sign = Img("HanoiSign", canvas, Load(MENU_ART + "sign_hanoi.png"), new Vector2(-83.8f, 388.5f), new Vector2(472.7f, 142.3f));
+        sign.preserveAspect = false;
         Button signButton = sign.gameObject.AddComponent<Button>();
         signButton.transition = Selectable.Transition.None;
         sign.gameObject.AddComponent<ButtonHoverAnimation>();
         UnityEventTools.AddPersistentListener(signButton.onClick, menu.StartHanoi);
 
-        // The radio display shows the star balance instead of "CITY FM".
-        Image radio = Img("RadioDisplay", canvas, rounded, new Vector2(391, -338), new Vector2(236, 92));
-        radio.type = Image.Type.Sliced;
-        radio.color = LcdBack;
+        // The radio display shows the star balance where "CITY FM" was
+        // (the painted note icon and signal bars stay).
+        Image radio = Img("RadioDisplay", canvas, Load(MENU_ART + "radio_lcd.png"), new Vector2(382.4f, -339.7f), new Vector2(147f, 90.7f));
+        radio.preserveAspect = false;
         radio.raycastTarget = false;
-        Image lcdStar = Img("Star", radio.rectTransform, Load(HANOI_ART + "lcd_star.png"), new Vector2(-72, 2), new Vector2(54, 54));
+        Image lcdStar = Img("Star", radio.rectTransform, Load(HANOI_ART + "lcd_star.png"), new Vector2(-36, 2), new Vector2(40, 40));
         lcdStar.color = LcdText;
         lcdStar.raycastTarget = false;
-        TMP_Text radioText = Text("Stars", radio.rectTransform, "0", new Vector2(32, 0), new Vector2(150, 84), 64, LcdText);
+        TMP_Text radioText = Text("Stars", radio.rectTransform, "0", new Vector2(20, 0), new Vector2(84, 76), 56, LcdText);
         RadioStarDisplay radioDisplay = radio.gameObject.AddComponent<RadioStarDisplay>();
         radioDisplay.displayText = radioText;
 
@@ -130,11 +131,16 @@ public static class MenuAndAdsSetup
         // Shop popup
         ShopPanel shop = BuildShop(canvas, menu, star, click, kachow);
 
-        // The phone on the dashboard opens the shop.
-        Image phone = Img("PhoneShop", canvas, Load(MENU_ART + "phone_shop_screen.png"), new Vector2(862, -108), new Vector2(96, 146));
+        // The phone on the dashboard shows a shop app and opens the shop.
+        // A soft light around its screen pulses so it looks tappable.
+        Image phone = Img("PhoneShop", canvas, Load(MENU_ART + "phone_shop.png"), new Vector2(866.4f, -131.4f), new Vector2(173.4f, 264.1f));
+        phone.preserveAspect = false;
         Button phoneButton = phone.gameObject.AddComponent<Button>();
         phoneButton.transition = Selectable.Transition.None;
-        phone.gameObject.AddComponent<GentlePulse>();
+        Image glow = Img("Glow", phone.rectTransform, Load(MENU_ART + "phone_glow.png"), Vector2.zero, new Vector2(173.4f, 264.1f));
+        glow.preserveAspect = false;
+        glow.raycastTarget = false;
+        phone.gameObject.AddComponent<GentlePulse>().fadeTarget = glow;
         PlayOnClick(phoneButton, menu.audioSource, click);
         UnityEventTools.AddPersistentListener(phoneButton.onClick, shop.Open);
 
