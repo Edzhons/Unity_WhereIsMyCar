@@ -48,12 +48,24 @@ public static class MenuAndAdsSetup
         foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/Sprites/Menu", "Assets/Sprites/Hanoi" }))
             HanoiSceneRebuilder.EnsureSpriteImport(AssetDatabase.GUIDToAssetPath(guid));
 
+        SetAppIdentity();
         SetupCityScene();
         SetupMenu();
         HanoiSceneRebuilder.RebuildWithoutBackup();
         AddHanoiToBuild();
         AssetDatabase.SaveAssets();
         Debug.Log("MenuAndAdsSetup: done");
+    }
+
+    // ---------------------------------------------------------------- app identity
+
+    // Its own name and Android package, so it doesn't replace other
+    // "Where Is My Car" builds made from the same class template.
+    static void SetAppIdentity()
+    {
+        PlayerSettings.companyName = "Edzhons";
+        PlayerSettings.productName = "Kur mans vags";
+        PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android, "com.Edzhons.KurMansVags");
     }
 
     // ---------------------------------------------------------------- CityScene
@@ -71,8 +83,92 @@ public static class MenuAndAdsSetup
         if (bannerButton != null)
             UnityEngine.Object.DestroyImmediate(bannerButton);
 
+        LayoutCityButtons();
+        LayoutCityEndPanel();
+
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
+    }
+
+    // The buttons canvas used constant pixel size, so the layout depended on the
+    // phone (hearts and the menu button ended up off screen). Now it scales with
+    // the screen height and everything sits in a corner, away from the banner ad
+    // in the bottom middle.
+    static void LayoutCityButtons()
+    {
+        GameObject canvasObj = GameObject.Find("CanvasButtons");
+        LandscapeScaler(canvasObj.GetComponent<CanvasScaler>());
+        Transform c = canvasObj.transform;
+
+        // top left: lives, with the two ad buttons under them
+        RectTransform lives = Place(c.Find("Lives"), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -20), new Vector2(320, 110));
+        for (int i = 0; i < 3; i++)
+            Place(lives.Find("Life" + (i + 1)), new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(55 + 100 * i, 0), new Vector2(80, 100));
+
+        RectTransform ads = Place(c.Find("Ads"), new Vector2(0, 1), new Vector2(0.5f, 0.5f), new Vector2(105, -215), new Vector2(130, 130));
+        Place(ads.Find("InterstitialAd"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(130, 130));
+        Place(ads.Find("RewardedAd"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -160), new Vector2(130, 130));
+
+        // top right: back to the menu
+        RectTransform menu = Place(c.Find("MenuButton2"), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-30, -30), new Vector2(320, 90));
+        TMP_Text menuText = menu.GetComponentInChildren<TMP_Text>();
+        menuText.fontSize = 42;
+
+        // bottom left: rotate and mirror; bottom right: size arrows
+        RectTransform rotation = Place(c.Find("Rotation"), Vector2.zero, new Vector2(0.5f, 0.5f), new Vector2(190, 95), new Vector2(100, 100));
+        Place(rotation.Find("CounterClockwise"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-120, 0), new Vector2(100, 100));
+        Place(rotation.Find("Flip"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(100, 100));
+        Place(rotation.Find("Clockwise"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(120, 0), new Vector2(100, 100));
+
+        RectTransform scaling = Place(c.Find("Scaling"), new Vector2(1, 0), new Vector2(0.5f, 0.5f), new Vector2(-190, 190), new Vector2(100, 100));
+        Place(scaling.Find("Wider"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(100, 0), new Vector2(95, 95));
+        Place(scaling.Find("Narrower"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-100, 0), new Vector2(95, 95));
+        Place(scaling.Find("Taller"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 100), new Vector2(95, 95));
+        Place(scaling.Find("Shorter"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -100), new Vector2(95, 95));
+    }
+
+    // The end panel was laid out for a portrait screen, so in landscape it was
+    // twice too big and the "SPELET VELREIZ" button was off screen.
+    static void LayoutCityEndPanel()
+    {
+        GameObject canvasObj = GameObject.Find("EndGameCanvas");
+        LandscapeScaler(canvasObj.GetComponent<CanvasScaler>());
+        // Above the buttons canvas, so its dark overlay covers (and blocks) the game buttons.
+        canvasObj.GetComponent<Canvas>().sortingOrder = 10;
+        RectTransform panel = (RectTransform)canvasObj.transform.Find("EndGamePanel");
+        panel.anchorMin = Vector2.zero;
+        panel.anchorMax = Vector2.one;
+        panel.anchoredPosition = Vector2.zero;
+        panel.sizeDelta = Vector2.zero;
+
+        Vector2 mid = new Vector2(0.5f, 0.5f);
+        Place(panel.Find("ResultText"), mid, mid, new Vector2(0, 290), new Vector2(1000, 170)).GetComponent<TMP_Text>().fontSize = 130;
+        RectTransform stars = Place(panel.Find("Stars"), mid, mid, new Vector2(0, 110), new Vector2(100, 100));
+        for (int i = 0; i < 3; i++)
+            Place(stars.Find("Star" + (i + 1)), mid, mid, new Vector2((i - 1) * 210, 0), new Vector2(190, 142));
+        Place(panel.Find("FinalTimeText"), mid, mid, new Vector2(0, -50), new Vector2(900, 100)).GetComponent<TMP_Text>().fontSize = 70;
+        Place(panel.Find("MenuButton"), mid, mid, new Vector2(-230, -210), new Vector2(400, 100));
+        Place(panel.Find("RestartButton"), mid, mid, new Vector2(230, -210), new Vector2(400, 100));
+    }
+
+    static void LandscapeScaler(CanvasScaler scaler)
+    {
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = 1f;
+    }
+
+    static RectTransform Place(Transform t, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
+    {
+        if (t == null)
+            throw new Exception("CityScene object missing");
+        RectTransform rt = (RectTransform)t;
+        rt.anchorMin = rt.anchorMax = anchor;
+        rt.pivot = pivot;
+        rt.anchoredPosition = pos;
+        rt.sizeDelta = size;
+        return rt;
     }
 
     // ---------------------------------------------------------------- menu
@@ -111,10 +207,10 @@ public static class MenuAndAdsSetup
         Image radio = Img("RadioDisplay", canvas, Load(MENU_ART + "radio_lcd.png"), new Vector2(382.4f, -339.7f), new Vector2(147f, 90.7f));
         radio.preserveAspect = false;
         radio.raycastTarget = false;
-        Image lcdStar = Img("Star", radio.rectTransform, Load(HANOI_ART + "lcd_star.png"), new Vector2(-36, 2), new Vector2(40, 40));
-        lcdStar.color = LcdText;
-        lcdStar.raycastTarget = false;
-        TMP_Text radioText = Text("Stars", radio.rectTransform, "0", new Vector2(20, 0), new Vector2(84, 76), 56, LcdText);
+        // The McQueen car the win screens give, drawn in the display's greens.
+        Image lcdCar = Img("Car", radio.rectTransform, Load(MENU_ART + "lcd_car.png"), new Vector2(-32, 0), new Vector2(64, 47.5f));
+        lcdCar.raycastTarget = false;
+        TMP_Text radioText = Text("Stars", radio.rectTransform, "0", new Vector2(32, 0), new Vector2(72, 70), 52, LcdText);
         RadioStarDisplay radioDisplay = radio.gameObject.AddComponent<RadioStarDisplay>();
         radioDisplay.displayText = radioText;
 
@@ -391,6 +487,13 @@ public static class MenuAndAdsSetup
             game.winMovesText.text = "Gajieni: 19   (minimums 15)";
             game.winEarnedText.text = "+2";
         });
+        Capture(CITY_SCENE, 2340, 1080, dir + "/city.png", null);
+        Capture(CITY_SCENE, 2048, 1536, dir + "/city_tablet.png", null);
+        Capture(CITY_SCENE, 2340, 1080, dir + "/city_win.png", () =>
+        {
+            GameManagerScript city = UnityEngine.Object.FindFirstObjectByType<GameManagerScript>();
+            city.endGamePanel.SetActive(true);
+        });
         Debug.Log("MenuAndAdsSetup: captures in " + dir);
     }
 
@@ -413,10 +516,23 @@ public static class MenuAndAdsSetup
         cam.orthographic = true;
         cam.targetTexture = target;
         camObj.transform.position = new Vector3(0, 0, -10);
+        // Look through the scene's own camera, so world space canvases (the city map) show.
+        Camera sceneCamera = Camera.main;
+        if (sceneCamera != null)
+        {
+            camObj.transform.SetPositionAndRotation(sceneCamera.transform.position, sceneCamera.transform.rotation);
+            cam.orthographic = sceneCamera.orthographic;
+            cam.orthographicSize = sceneCamera.orthographicSize;
+            cam.nearClipPlane = sceneCamera.nearClipPlane;
+            cam.farClipPlane = sceneCamera.farClipPlane;
+        }
         foreach (Camera other in UnityEngine.Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))
             if (other != cam) other.enabled = false;
 
-        Canvas[] canvases = UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Where(c => c.isRootCanvas).ToArray();
+        Canvas[] canvases = UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None)
+            .Where(c => c.isRootCanvas && c.renderMode != RenderMode.WorldSpace).ToArray();
+        foreach (Canvas world in UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Where(c => c.renderMode == RenderMode.WorldSpace))
+            world.worldCamera = cam;
         for (int i = 0; i < canvases.Length; i++)
         {
             canvases[i].renderMode = RenderMode.ScreenSpaceCamera;

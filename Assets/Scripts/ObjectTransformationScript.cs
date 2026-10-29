@@ -20,27 +20,38 @@ public class ObjectTransformationScript : MonoBehaviour
         }
 
         RectTransform rc = GameObjectsScript.lastDragged.GetComponent<RectTransform>();
-        if (rotateCW)
+
+        // Keyboard (see README): Z/X rotate, arrows change size, Space mirrors.
+        bool keyCCW = Input.GetKey(KeyCode.Z);
+        bool keyCW = Input.GetKey(KeyCode.X);
+        bool keyTaller = Input.GetKey(KeyCode.UpArrow);
+        bool keyShorter = Input.GetKey(KeyCode.DownArrow);
+        bool keyWider = Input.GetKey(KeyCode.RightArrow);
+        bool keyNarrower = Input.GetKey(KeyCode.LeftArrow);
+        if (Input.GetKeyDown(KeyCode.Space))
+            FlipCar();
+
+        if (rotateCW || keyCW)
         {
             rc.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
         }
 
-        if (rotateCCW)
+        if (rotateCCW || keyCCW)
         {
             rc.Rotate(0, 0, rotationSpeed * Time.deltaTime);
         }
 
-        if (scaleUpY && rc.localScale.y < maxSize)
+        if ((scaleUpY || keyTaller) && rc.localScale.y < maxSize)
         {
-            rc.localScale += new Vector3(0, scaleSpeed * Time.deltaTime, 0);
+            rc.localScale = new Vector3(rc.localScale.x, Mathf.Min(rc.localScale.y + scaleSpeed * Time.deltaTime, maxSize), rc.localScale.z);
         }
 
-        if (scaleDownY && rc.localScale.y > minSize)
+        if ((scaleDownY || keyShorter) && rc.localScale.y > minSize)
         {
-            rc.localScale -= new Vector3(0, scaleSpeed * Time.deltaTime, 0);
+            rc.localScale = new Vector3(rc.localScale.x, Mathf.Max(rc.localScale.y - scaleSpeed * Time.deltaTime, minSize), rc.localScale.z);
         }
 
-        if (scaleUpX && Mathf.Abs(rc.localScale.x) < maxSize)
+        if ((scaleUpX || keyWider) && Mathf.Abs(rc.localScale.x) < maxSize)
         {
             float sign = Mathf.Sign(rc.localScale.x);
             rc.localScale = new Vector3(
@@ -50,7 +61,7 @@ public class ObjectTransformationScript : MonoBehaviour
             );
         }
 
-        if (scaleDownX && Mathf.Abs(rc.localScale.x) > minSize)
+        if ((scaleDownX || keyNarrower) && Mathf.Abs(rc.localScale.x) > minSize)
         {
             float sign = Mathf.Sign(rc.localScale.x);
             rc.localScale = new Vector3(
@@ -60,7 +71,8 @@ public class ObjectTransformationScript : MonoBehaviour
             );
         }
 
-        isTransforming = rotateCW || rotateCCW || scaleUpY || scaleDownY || scaleUpX || scaleDownX;
+        isTransforming = rotateCW || rotateCCW || scaleUpY || scaleDownY || scaleUpX || scaleDownX ||
+            keyCW || keyCCW || keyTaller || keyShorter || keyWider || keyNarrower;
     }
 
     public void StartRotateCW(BaseEventData eventData) { rotateCW = true; }

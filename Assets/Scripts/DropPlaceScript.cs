@@ -187,6 +187,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
         Vector3 centerPosition = canvasRect.TransformPoint(canvasRect.rect.center);
 
+        // Unscaled time: placing the last car shows the win screen, which stops time.
+
         // How huge the car gets
         Vector3 hugeScale = new Vector3(
             startScale.x * 15f,
@@ -203,7 +205,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
         while (elapsed < moveToCenterDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
 
             float t = Mathf.Clamp01(elapsed / moveToCenterDuration);
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
@@ -252,7 +254,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
         // PHASE 2: STAY HUGE
         // -------------------------
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         // -------------------------
         // PHASE 3: FLY BACK TO PLACE
@@ -267,7 +269,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
         while (elapsed < returnDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
 
             float t = Mathf.Clamp01(elapsed / returnDuration);
             float smoothT = Mathf.SmoothStep(0f, 1f, t);

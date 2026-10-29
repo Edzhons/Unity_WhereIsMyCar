@@ -106,9 +106,9 @@ public class ScreenBoundaryScript : MonoBehaviour
         float shrinkW = worldBounds.width * reductionFactor;
         float shrinkH = worldBounds.height * reductionFactor;
         float wbMinX = worldBounds.xMin + shrinkW;
-        float wbMaxX = worldBounds.xMax + shrinkW;
+        float wbMaxX = worldBounds.xMax - shrinkW;
         float wbMinY = worldBounds.yMin + shrinkH;
-        float wbMaxY = worldBounds.yMax + shrinkH;
+        float wbMaxY = worldBounds.yMax - shrinkH;
 
         float clampedX = Mathf.Clamp(curPosition.x, wbMinX, wbMaxX);
         float clampedY = Mathf.Clamp(curPosition.y, wbMinY, wbMaxY);

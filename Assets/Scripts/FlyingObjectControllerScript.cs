@@ -70,6 +70,10 @@ public class FlyingObjectControllerScript : MonoBehaviour
             isFadingOut = true;
         }
 
+        // Time is stopped on the win/lose screen and during ads: nothing can be hit then.
+        if (Time.timeScale == 0f)
+            return;
+
         // For Android
         Vector2 inputPosition;
         if (!TryGetInputPosition(out inputPosition))
@@ -253,7 +257,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
         while (elapsed < duration)
         {
             rectTransform.anchoredPosition = originalPos + Random.insideUnitCircle * intensity;
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
         rectTransform.anchoredPosition = originalPos;

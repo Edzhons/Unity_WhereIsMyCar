@@ -56,7 +56,7 @@ public class CameraZoomScript : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
         DesktopFollowCursor();
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if ((Mathf.Abs(scroll) > Mathf.Epsilon)) { }
+        if (Mathf.Abs(scroll) > Mathf.Epsilon)
             mainCamera.orthographicSize -= scroll * mouseScrollSpeed;
 
 #else
@@ -97,6 +97,13 @@ public class CameraZoomScript : MonoBehaviour
         }
 
         Touch touch = Input.GetTouch(0);
+
+        // The finger is moving a car, not the map.
+        if (GameObjectsScript.isDragging)
+        {
+            isTouchPan = false;
+            return;
+        }
 
         if (IsTouchUIButton(touch.position))
         {
@@ -154,7 +161,9 @@ public class CameraZoomScript : MonoBehaviour
 
         foreach(RaycastResult result in results)
         {
-            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null)
+            // Buttons and cars: touching a car starts dragging it, not the map.
+            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null ||
+                result.gameObject.GetComponent<DragAndDropScript>() != null)
             {
                 return true;
             }
