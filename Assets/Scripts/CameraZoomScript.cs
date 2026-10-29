@@ -98,13 +98,6 @@ public class CameraZoomScript : MonoBehaviour
 
         Touch touch = Input.GetTouch(0);
 
-        // The finger is moving a car, not the map.
-        if (GameObjectsScript.isDragging)
-        {
-            isTouchPan = false;
-            return;
-        }
-
         if (IsTouchUIButton(touch.position))
         {
             return;
@@ -161,9 +154,7 @@ public class CameraZoomScript : MonoBehaviour
 
         foreach(RaycastResult result in results)
         {
-            // Buttons and cars: touching a car starts dragging it, not the map.
-            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null ||
-                result.gameObject.GetComponent<DragAndDropScript>() != null)
+            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null)
             {
                 return true;
             }

@@ -92,12 +92,12 @@ public static class MenuAndAdsSetup
 
     // The buttons canvas used constant pixel size, so the layout depended on the
     // phone (hearts and the menu button ended up off screen). Now it scales with
-    // the screen height and everything sits in a corner, away from the banner ad
-    // in the bottom middle.
+    // the screen and everything sits in a corner. The bottom buttons stay above
+    // the banner ad, which in portrait is almost as wide as the screen.
     static void LayoutCityButtons()
     {
         GameObject canvasObj = GameObject.Find("CanvasButtons");
-        LandscapeScaler(canvasObj.GetComponent<CanvasScaler>());
+        BothOrientationsScaler(canvasObj.GetComponent<CanvasScaler>());
         Transform c = canvasObj.transform;
 
         // top left: lives, with the two ad buttons under them
@@ -115,24 +115,24 @@ public static class MenuAndAdsSetup
         menuText.fontSize = 42;
 
         // bottom left: rotate and mirror; bottom right: size arrows
-        RectTransform rotation = Place(c.Find("Rotation"), Vector2.zero, new Vector2(0.5f, 0.5f), new Vector2(190, 95), new Vector2(100, 100));
+        RectTransform rotation = Place(c.Find("Rotation"), Vector2.zero, new Vector2(0.5f, 0.5f), new Vector2(190, 210), new Vector2(100, 100));
         Place(rotation.Find("CounterClockwise"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-120, 0), new Vector2(100, 100));
         Place(rotation.Find("Flip"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(100, 100));
         Place(rotation.Find("Clockwise"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(120, 0), new Vector2(100, 100));
 
-        RectTransform scaling = Place(c.Find("Scaling"), new Vector2(1, 0), new Vector2(0.5f, 0.5f), new Vector2(-190, 190), new Vector2(100, 100));
+        RectTransform scaling = Place(c.Find("Scaling"), new Vector2(1, 0), new Vector2(0.5f, 0.5f), new Vector2(-190, 300), new Vector2(100, 100));
         Place(scaling.Find("Wider"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(100, 0), new Vector2(95, 95));
         Place(scaling.Find("Narrower"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-100, 0), new Vector2(95, 95));
         Place(scaling.Find("Taller"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 100), new Vector2(95, 95));
         Place(scaling.Find("Shorter"), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -100), new Vector2(95, 95));
     }
 
-    // The end panel was laid out for a portrait screen, so in landscape it was
-    // twice too big and the "SPELET VELREIZ" button was off screen.
+    // The end panel was laid out for portrait only: in landscape it was twice too
+    // big and the "SPELET VELREIZ" button was off screen. Now it fits both.
     static void LayoutCityEndPanel()
     {
         GameObject canvasObj = GameObject.Find("EndGameCanvas");
-        LandscapeScaler(canvasObj.GetComponent<CanvasScaler>());
+        BothOrientationsScaler(canvasObj.GetComponent<CanvasScaler>());
         // Above the buttons canvas, so its dark overlay covers (and blocks) the game buttons.
         canvasObj.GetComponent<Canvas>().sortingOrder = 10;
         RectTransform panel = (RectTransform)canvasObj.transform.Find("EndGamePanel");
@@ -147,16 +147,25 @@ public static class MenuAndAdsSetup
         for (int i = 0; i < 3; i++)
             Place(stars.Find("Star" + (i + 1)), mid, mid, new Vector2((i - 1) * 210, 0), new Vector2(190, 142));
         Place(panel.Find("FinalTimeText"), mid, mid, new Vector2(0, -50), new Vector2(900, 100)).GetComponent<TMP_Text>().fontSize = 70;
-        Place(panel.Find("MenuButton"), mid, mid, new Vector2(-230, -210), new Vector2(400, 100));
-        Place(panel.Find("RestartButton"), mid, mid, new Vector2(230, -210), new Vector2(400, 100));
+        RectTransform menuButton = Place(panel.Find("MenuButton"), mid, mid, new Vector2(-230, -210), new Vector2(400, 100));
+        RectTransform restartButton = Place(panel.Find("RestartButton"), mid, mid, new Vector2(230, -210), new Vector2(400, 100));
+
+        // Side by side in landscape, stacked in portrait.
+        EndPanelOrientation orientation = panel.GetComponent<EndPanelOrientation>();
+        if (orientation == null)
+            orientation = panel.gameObject.AddComponent<EndPanelOrientation>();
+        orientation.menuButton = menuButton;
+        orientation.restartButton = restartButton;
     }
 
-    static void LandscapeScaler(CanvasScaler scaler)
+    // The city can be played in both orientations; with everything anchored to
+    // corners, 1920x1080 matched halfway works for both.
+    static void BothOrientationsScaler(CanvasScaler scaler)
     {
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 1f;
+        scaler.matchWidthOrHeight = 0.5f;
     }
 
     static RectTransform Place(Transform t, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
@@ -489,6 +498,15 @@ public static class MenuAndAdsSetup
         });
         Capture(CITY_SCENE, 2340, 1080, dir + "/city.png", null);
         Capture(CITY_SCENE, 2048, 1536, dir + "/city_tablet.png", null);
+        Capture(CITY_SCENE, 1080, 2340, dir + "/city_portrait.png", null);
+        Capture(CITY_SCENE, 1080, 2340, dir + "/city_win_portrait.png", () =>
+        {
+            GameManagerScript city = UnityEngine.Object.FindFirstObjectByType<GameManagerScript>();
+            city.endGamePanel.SetActive(true);
+            EndPanelOrientation o = city.endGamePanel.GetComponent<EndPanelOrientation>();
+            o.menuButton.anchoredPosition = o.stackedMenu;
+            o.restartButton.anchoredPosition = o.stackedRestart;
+        });
         Capture(CITY_SCENE, 2340, 1080, dir + "/city_win.png", () =>
         {
             GameManagerScript city = UnityEngine.Object.FindFirstObjectByType<GameManagerScript>();
