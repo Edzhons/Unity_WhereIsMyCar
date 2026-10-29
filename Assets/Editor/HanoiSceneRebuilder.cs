@@ -338,7 +338,8 @@ public static class HanoiSceneRebuilder
     {
         TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
         if (importer == null) return;
-        if (importer.textureType != TextureImporterType.Sprite || importer.mipmapEnabled)
+        // This project imports new textures as sprite sheets (Multiple); ours are single sprites.
+        if (importer.textureType != TextureImporterType.Sprite || importer.spriteImportMode != SpriteImportMode.Single || importer.mipmapEnabled)
         {
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
