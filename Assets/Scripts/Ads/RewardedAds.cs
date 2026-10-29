@@ -1,21 +1,28 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
+/// <summary>
+/// Rewarded ads. Whoever shows the ad passes a callback that gets true only
+/// when Unity Ads reports COMPLETED, and gives its own reward.
+/// </summary>
 public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     string _adUnitId;
 
     [SerializeField] Button _rewardedAdButton;
-    public FlyingObjectManager flyingObjectManager;
+
+    public bool IsReady { get; private set; }
+
+    private Action<bool> onAdFinished;
+    private float timeScaleBeforeAd = 1f;
 
     private void Awake()
     {
         _adUnitId = _androidAdUnitId;
-        if(flyingObjectManager == null)
-            flyingObjectManager = FindFirstObjectByType<FlyingObjectManager>();
     }
 
     public void LoadAd()
@@ -36,15 +43,47 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         Debug.Log("Rewarded ad loaded: " + placementId);
 
         if (placementId.Equals(_adUnitId))
-            _rewardedAdButton.interactable = true;
+        {
+            IsReady = true;
+            if (_rewardedAdButton != null)
+                _rewardedAdButton.interactable = true;
+        }
     }
 
+    /// <summary>CityScene's button: the reward destroys every flying object.</summary>
     public void ShowAd()
     {
-        // vélák jápaslépj banner ad
+        ShowForReward(completed =>
+        {
+            FlyingObjectManager flyingObjectManager = FindFirstObjectByType<FlyingObjectManager>();
+            if (completed && flyingObjectManager != null)
+                flyingObjectManager.DestroyAllFlyingObjects();
+        });
+    }
 
-        _rewardedAdButton.interactable = false;
+    /// <summary>Tower of Hanoi hint / undo.</summary>
+    public bool ShowForHanoiReward(Action<bool> onFinished)
+    {
+        return ShowForReward(onFinished);
+    }
+
+    public bool ShowForReward(Action<bool> onFinished)
+    {
+        if (!IsReady)
+            return false;
+
+        IsReady = false;
+        onAdFinished = onFinished;
+        timeScaleBeforeAd = Time.timeScale;
+
+        if (_rewardedAdButton != null)
+            _rewardedAdButton.interactable = false;
+
+        if (AdManager.Instance != null)
+            AdManager.Instance.bannerAd.HideBannerAd();
+
         Advertisement.Show(_adUnitId, this);
+        return true;
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
@@ -55,13 +94,14 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     private IEnumerator WaitAndLoadAd(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         LoadAd();
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.Log($"Error showing rewarded ad: {placementId} : {error.ToString()} - {message}");
+        Finish(false);
         StartCoroutine(WaitAndLoadAd(10f));
     }
 
@@ -78,15 +118,26 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     public void OnUnityAdsShowComplete(string placementId,
     UnityAdsShowCompletionState showCompletionState)
     {
-        if (placementId.Equals(_adUnitId) &&
-            showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
-        {
+        bool completed = placementId.Equals(_adUnitId) &&
+            showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED);
+
+        if (completed)
             Debug.Log("Rewarded ad completed!");
-            flyingObjectManager.DestroyAllFlyingObjects();
-            _rewardedAdButton.interactable = false;
-            StartCoroutine(WaitAndLoadAd(15f));
-        }
-        Time.timeScale = 1f;
+
+        Finish(completed);
+        StartCoroutine(WaitAndLoadAd(completed ? 15f : 1f));
+    }
+
+    private void Finish(bool completed)
+    {
+        Time.timeScale = timeScaleBeforeAd;
+
+        Action<bool> callback = onAdFinished;
+        onAdFinished = null;
+        callback?.Invoke(completed);
+
+        if (AdManager.Instance != null)
+            AdManager.Instance.bannerAd.ShowBanner();
     }
 
     public void SetButton(Button button)
@@ -97,6 +148,6 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ShowAd);
         _rewardedAdButton = button;
-        _rewardedAdButton.interactable = false;
+        _rewardedAdButton.interactable = IsReady;
     }
 }

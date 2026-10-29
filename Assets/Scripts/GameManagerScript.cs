@@ -60,6 +60,9 @@ public class GameManagerScript : MonoBehaviour
             ForceWin();
         }
 
+        // TEST KEY - F2 gives 50 stars for the shop
+        StarBank.CheckCheatKey();
+
         if (gameEnded)
             return;
 
@@ -191,6 +194,9 @@ public class GameManagerScript : MonoBehaviour
             FormatTime(elapsedTime);
 
         UpdateStars();
+
+        // Stars go into the bank for the shop.
+        StarBank.Deposit(GetStarCount());
 
         endGamePanel.SetActive(true);
     }

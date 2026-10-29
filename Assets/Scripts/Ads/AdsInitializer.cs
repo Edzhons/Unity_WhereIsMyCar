@@ -9,8 +9,12 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     private string _gameId;
     public event Action OnAdsInitialized;
 
-    void Awake()
+    void Start()
     {
+        // Only the AdsScriptHolder that survives scene loads starts Unity Ads.
+        if (AdManager.Instance != null && AdManager.Instance.adsInitializer != this)
+            return;
+
         InitializeAds();
     }
 
@@ -23,6 +27,10 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
         if(!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);
+        }
+        else if (Advertisement.isInitialized)
+        {
+            OnAdsInitialized?.Invoke();
         }
     }
 
