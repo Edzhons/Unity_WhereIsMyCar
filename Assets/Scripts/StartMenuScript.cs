@@ -19,6 +19,17 @@ public class StartMenuScript : MonoBehaviour
         StartCoroutine(StartGameWithSound());
     }
 
+    public void StartHanoi()
+    {
+        StartCoroutine(StartHanoiWithSound());
+    }
+
+    void Update()
+    {
+        // TEST KEY - F2 gives 50 stars for the shop
+        StarBank.CheckCheatKey();
+    }
+
     public void QuitGame()
     {
         StartCoroutine(QuitGameWithSound());
@@ -52,6 +63,16 @@ public class StartMenuScript : MonoBehaviour
 
         // Load the game scene
         SceneManager.LoadScene("CityScene");
+    }
+
+
+    IEnumerator StartHanoiWithSound()
+    {
+        audioSource.PlayOneShot(buttonSound);
+
+        yield return new WaitForSeconds(buttonSound.length);
+
+        SceneManager.LoadScene("TowerOfHanoi");
     }
 
 
