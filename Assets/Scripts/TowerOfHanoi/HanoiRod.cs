@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// <summary>Attach to each rod's UI drop target (Image with Raycast Target enabled).</summary>
+/// <summary>
+/// Attach to each rod's UI drop target (Image with Raycast Target enabled).
+/// The target's pivot is where the bottom disk rests (top of the rod's base).
+/// </summary>
 public class HanoiRod : MonoBehaviour, IDropHandler
 {
     private readonly List<HanoiDisk> disks = new List<HanoiDisk>();
@@ -50,7 +53,7 @@ public class HanoiRod : MonoBehaviour, IDropHandler
             manager.TryMove(disk, this);
     }
 
-    public void LayoutDisks(float diskHeight, float bottomOffset)
+    public void LayoutDisks(float diskHeight, float bottomOffset, bool animate)
     {
         RectTransform rodRect = transform as RectTransform;
         if (rodRect == null)
@@ -66,13 +69,14 @@ public class HanoiRod : MonoBehaviour, IDropHandler
             if (diskRect == null)
                 continue;
 
+            // Lower disks first, so each disk is drawn over the one below it.
             diskRect.SetParent(rodRect.parent, true);
             diskRect.SetAsLastSibling();
-            diskRect.anchoredPosition = new Vector2(
-                rodRect.anchoredPosition.x,
-                rodRect.anchoredPosition.y + bottomOffset + (i + 0.5f) * diskHeight
-            );
             diskRect.localRotation = Quaternion.identity;
+            disk.MoveTo(new Vector2(
+                rodRect.anchoredPosition.x,
+                rodRect.anchoredPosition.y + bottomOffset + i * diskHeight
+            ), animate);
         }
     }
 }
