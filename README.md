@@ -61,12 +61,12 @@ atlīdzība atkarībā no izpildes laika.
 **Ekrānuzņēmums --- automašīnu puzles spēle**
 
 ![Automašīnu puzles spēles
-ekrānuzņēmums](docs/screenshots/car-puzzle-gameplay.png)
+ekrānuzņēmums](docs/screenshots/car-puzzle-gameplay.PNG)
 
 **Ekrānuzņēmums --- automašīnu puzles rezultāti**
 
 ![Automašīnu puzles rezultātu
-ekrānuzņēmums](docs/screenshots/car-puzzle-results.png)
+ekrānuzņēmums](docs/screenshots/car-puzzle-results.PNG)
 
 ### Hanojas torņi
 
@@ -124,11 +124,6 @@ ekrānuzņēmums](docs/screenshots/hanoi-level-selection.png)
 
 ![Hanojas torņu spēles
 ekrānuzņēmums](docs/screenshots/hanoi-gameplay.png)
-
-**Ekrānuzņēmums --- padoma vai gājiena atsaukšanas funkcija**
-
-![Hanojas torņu palīgfunkciju
-ekrānuzņēmums](docs/screenshots/hanoi-hint-undo.png)
 
 **Ekrānuzņēmums --- Hanojas torņu līmeņa rezultāts**
 
@@ -346,23 +341,5 @@ izvietojumu ID skriptos un Unity Ads informācijas panelī.
     noņemt vai atspējot.
 -   Projekts satur Unity Editor skriptus mapē `Assets/Editor/`.
 -   Spēlē izmantoti Unity UI un TextMeshPro komponenti.
-
-## Ekrānuzņēmumu mape
-
-Izveido šo mapi repozitorijā un pievieno ekrānuzņēmumus ar zemāk
-norādītajiem failu nosaukumiem:
-
-``` text
-docs/
-└── screenshots/
-    ├── main-menu.png
-    ├── car-puzzle-gameplay.png
-    ├── car-puzzle-results.png
-    ├── hanoi-level-selection.png
-    ├── hanoi-gameplay.png
-    ├── hanoi-hint-undo.png
-    ├── hanoi-results.png
-    └── shop.png
-```
 
 ------------------------------------------------------------------------
