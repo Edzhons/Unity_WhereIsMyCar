@@ -1,193 +1,219 @@
-# Car Puzzle & Tower of Hanoi
+# Automašīnu puzle un Hanojas torņi
 
-A Unity puzzle game featuring two game modes: a car-placement puzzle and
-the classic Tower of Hanoi. The project includes progression, star
-rewards, a shared in-game currency, a shop with unlockable disk skins
-and helper tokens, and Unity Ads integration.
+Unity izstrādāta loģikas spēle ar diviem spēles režīmiem: automašīnu
+izvietošanas puzli un klasisko Hanojas torņu uzdevumu. Projektā iekļauta
+spēles progresija, zvaigžņu atlīdzības, kopīga spēles valūta, veikals ar
+atbloķējamām disku tekstūrām un palīgtokeniem, kā arī Unity Ads
+integrācija.
 
-> **Screenshots:** Add your own screenshots to `docs/screenshots/` and
-> use the filenames shown below. The image placeholders will display
-> once the files are added.
+## Saturs
 
-## Table of contents
+-   [Spēles režīmi](#spēles-režīmi)
+    -   [Automašīnu puzle](#automašīnu-puzle)
+    -   [Hanojas torņi](#hanojas-torņi)
+-   [Progresija un zvaigžņu sistēma](#progresija-un-zvaigžņu-sistēma)
+-   [Veikals](#veikals)
+-   [Reklāmas](#reklāmas)
+-   [Projekta struktūra](#projekta-struktūra)
+-   [Projekta palaišana](#projekta-palaišana)
+-   [Vadība](#vadība)
+-   [Piezīmes izstrādātājiem](#piezīmes-izstrādātājiem)
 
--   [Game modes](#game-modes)
-    -   [Car Puzzle](#car-puzzle)
-    -   [Tower of Hanoi](#tower-of-hanoi)
--   [Progression and star system](#progression-and-star-system)
--   [Shop](#shop)
--   [Advertisements](#advertisements)
--   [Project structure](#project-structure)
--   [How to run](#how-to-run)
--   [Controls](#controls)
--   [Development notes](#development-notes)
+## Spēles režīmi
 
-## Game modes
-
-The project contains three Unity scenes:
+Projektā ir trīs Unity ainas:
 
   -----------------------------------------------------------------------
-  Scene                               Purpose
+  Aina                                Apraksts
   ----------------------------------- -----------------------------------
-  `StartMenu`                         Main menu, game-mode selection,
-                                      shop and settings/interactions
+  `StartMenu`                         Galvenā izvēlne, spēles režīmu
+                                      izvēle, veikals un citas izvēlnes
+                                      funkcijas
 
-  `CityScene`                         Car puzzle gameplay
+  `CityScene`                         Automašīnu puzles spēles režīms
 
-  `TowerOfHanoi`                      Tower of Hanoi puzzle gameplay
+  `TowerOfHanoi`                      Hanojas torņu loģikas spēle
   -----------------------------------------------------------------------
 
-### Main menu
+### Galvenā izvēlne
 
-The main menu is the central hub. Players can enter either game mode and
-open the in-game shop. The menu also includes interactive elements and
-audio feedback.
+Galvenā izvēlne ir spēles centrālais ekrāns. Tajā spēlētājs var
+izvēlēties kādu no spēles režīmiem un atvērt spēles veikalu. Izvēlnē ir
+arī interaktīvi elementi un skaņas efekti.
 
-**Screenshot --- Main menu**
+**Ekrānuzņēmums --- galvenā izvēlne**
 
-![Main menu screenshot](docs/screenshots/main-menu.png)
+![Galvenās izvēlnes ekrānuzņēmums](docs/screenshots/main-menu.png)
 
-### Car Puzzle
+### Automašīnu puzle
 
-In the Car Puzzle mode, players drag cars into their matching parking
-spaces on the map. Cars can require transformations such as resizing,
-mirroring or rotation to fit the target space.
+Šajā režīmā spēlētājam ar vilkšanas un nomešanas principu jānovieto
+automašīnas tām paredzētajās stāvvietās kartē. Lai automašīna atbilstu
+mērķa vietai, var būt nepieciešams mainīt tās izmēru, spoguļattēlu vai
+pagriezienu.
 
-The game includes: - Drag-and-drop car placement. - Car transformation
-mechanics. - A timer and life system. - Flying hazards that can cost the
-player a life. - Win and lose screens. - A star reward based on
-completion time.
+Spēles funkcionalitāte: - Automašīnu pārvietošana ar vilkšanas un
+nomešanas metodi. - Automašīnu izmēra, spoguļattēla un pagrieziena
+maiņa. - Taimeris un dzīvību sistēma. - Lidojoši šķēršļi, kuru sadursme
+var atņemt spēlētājam dzīvību. - Uzvaras un zaudējuma ekrāni. - Zvaigžņu
+atlīdzība atkarībā no izpildes laika.
 
-**Screenshot --- Car Puzzle gameplay**
+**Ekrānuzņēmums --- automašīnu puzles spēle**
 
-![Car Puzzle gameplay
-screenshot](docs/screenshots/car-puzzle-gameplay.png)
+![Automašīnu puzles spēles
+ekrānuzņēmums](docs/screenshots/car-puzzle-gameplay.png)
 
-**Screenshot --- Car Puzzle result screen**
+**Ekrānuzņēmums --- automašīnu puzles rezultāti**
 
-![Car Puzzle result screenshot](docs/screenshots/car-puzzle-results.png)
+![Automašīnu puzles rezultātu
+ekrānuzņēmums](docs/screenshots/car-puzzle-results.png)
 
-### Tower of Hanoi
+### Hanojas torņi
 
-Tower of Hanoi is an additional puzzle mode based on the classic
-disk-stacking challenge. The objective is to move the complete stack
-from the first rod to the third rod while following the standard rules:
+Hanojas torņi ir papildu loģikas spēles režīms, kura pamatā ir
+klasiskais disku pārvietošanas uzdevums. Mērķis ir pārvietot visu disku
+kaudzi no pirmā stieņa uz trešo, ievērojot noteikumus:
 
-1.  Move only one disk at a time.
-2.  Only the top disk of a rod can be moved.
-3.  A larger disk cannot be placed on top of a smaller disk.
+1.  Vienā gājienā drīkst pārvietot tikai vienu disku.
+2.  Pārvietot drīkst tikai stieņa augšējo disku.
+3.  Lielāku disku nedrīkst novietot uz mazāka diska.
 
-The mode has **three progressively harder levels**:
+Spēlei ir **trīs grūtības līmeņi**:
 
-  Level     Number of disks   Minimum moves
-  ------- ----------------- ---------------
-  1                       3               7
-  2                       4              15
-  3                       5              31
+  Līmenis         Disku skaits   Minimālais gājienu skaits
+  ------------- -------------- ---------------------------
+  1\. līmenis                3                           7
+  2\. līmenis                4                          15
+  3\. līmenis                5                          31
 
-Players drag disks between the three rods. The game tracks the number of
-moves and compares it with the theoretical minimum.
+Spēlētājs pārvieto diskus starp trim stieņiem. Spēle uzskaita veikto
+gājienu skaitu un salīdzina to ar teorētiski minimālo gājienu skaitu.
 
-#### Star rating and level progression
+#### Zvaigžņu vērtējums un līmeņu atbloķēšana
 
-Each completed level awards stars based on the number of moves:
+Pēc līmeņa pabeigšanas spēlētājs saņem zvaigznes atkarībā no veikto
+gājienu skaita:
 
--   **3 stars:** solved in the minimum possible number of moves.
--   **2 stars:** solved in up to 1.5 times the minimum number of moves.
--   **1 star:** completed with more moves.
+-   **3 zvaigznes:** līmenis atrisināts ar minimālo iespējamo gājienu
+    skaitu.
+-   **2 zvaigznes:** līmenis atrisināts ar ne vairāk kā 1,5 reizēm
+    lielāku gājienu skaitu par minimumu.
+-   **1 zvaigzne:** līmenis pabeigts, izmantojot vairāk gājienu.
 
-The best star result for each level is saved. Completing a level unlocks
-the next one. The level selection screen displays each level's unlock
-state and saved star result.
+Katram līmenim tiek saglabāts labākais iegūtais zvaigžņu rezultāts. Pēc
+līmeņa pabeigšanas tiek atbloķēts nākamais līmenis. Līmeņu izvēlnē
+redzams katra līmeņa pieejamības statuss un iegūtais zvaigžņu vērtējums.
 
-#### Hints and undo
+#### Padomi un gājiena atsaukšana
 
-Players can request: - **Hint:** highlights the disk to move and
-indicates the destination rod. - **Undo:** reverses the most recent
-valid move.
+Spēlētājam pieejamas divas palīgfunkcijas: - **Padoms:** norāda, kuru
+disku pārvietot un uz kuru stieni to novietot. - **Atsaukt gājienu:**
+atceļ pēdējo derīgo gājienu.
 
-Hints and undo can be used with tokens purchased in the shop. If the
-player has no tokens, the game can offer a rewarded advertisement
-instead. The bonus is granted only when the rewarded ad is completed
-successfully.
+Padomus un gājienu atsaukšanu var izmantot ar veikalā iegādātiem
+tokeniem. Ja spēlētājam tokenu nav, spēle var piedāvāt noskatīties
+atlīdzības reklāmu. Palīgfunkcija tiek piešķirta tikai pēc veiksmīgi
+pabeigtas reklāmas noskatīšanās.
 
-**Screenshot --- Tower of Hanoi level selection**
+**Ekrānuzņēmums --- Hanojas torņu līmeņu izvēlne**
 
-![Tower of Hanoi level selection
-screenshot](docs/screenshots/hanoi-level-selection.png)
+![Hanojas torņu līmeņu izvēlnes
+ekrānuzņēmums](docs/screenshots/hanoi-level-selection.png)
 
-**Screenshot --- Tower of Hanoi gameplay**
+**Ekrānuzņēmums --- Hanojas torņu spēles process**
 
-![Tower of Hanoi gameplay
-screenshot](docs/screenshots/hanoi-gameplay.png)
+![Hanojas torņu spēles
+ekrānuzņēmums](docs/screenshots/hanoi-gameplay.png)
 
-**Screenshot --- Tower of Hanoi hint or undo**
+**Ekrānuzņēmums --- padoma vai gājiena atsaukšanas funkcija**
 
-![Tower of Hanoi helper
-screenshot](docs/screenshots/hanoi-hint-undo.png)
+![Hanojas torņu palīgfunkciju
+ekrānuzņēmums](docs/screenshots/hanoi-hint-undo.png)
 
-**Screenshot --- Tower of Hanoi level completion**
+**Ekrānuzņēmums --- Hanojas torņu līmeņa rezultāts**
 
-![Tower of Hanoi results screenshot](docs/screenshots/hanoi-results.png)
+![Hanojas torņu rezultātu
+ekrānuzņēmums](docs/screenshots/hanoi-results.png)
 
-## Progression and star system
+## Progresija un zvaigžņu sistēma
 
-Both game modes contribute to a shared star balance.
+Abi spēles režīmi papildina kopējo zvaigžņu bilanci.
 
--   The Car Puzzle awards stars according to the time taken to complete
-    the level.
--   Tower of Hanoi awards stars according to move efficiency.
--   Stars are stored locally using Unity `PlayerPrefs`.
--   The shared balance can be spent in the shop.
--   Hanoi level unlocks and each level's best star result are also
-    stored locally.
+-   Automašīnu puzlē zvaigznes tiek piešķirtas atkarībā no līmeņa
+    izpildes laika.
+-   Hanojas torņos zvaigznes tiek piešķirtas atkarībā no gājienu
+    efektivitātes.
+-   Zvaigžņu bilance tiek saglabāta lokāli, izmantojot Unity
+    `PlayerPrefs`.
+-   Iegūtās zvaigznes var iztērēt spēles veikalā.
+-   Hanojas torņu līmeņu atbloķēšana un katra līmeņa labākais zvaigžņu
+    rezultāts arī tiek saglabāts lokāli.
 
-The star balance is managed by the static `StarBank` class.
+Kopējo zvaigžņu bilanci pārvalda statiskā klase `StarBank`.
 
-## Shop
+## Veikals
 
-The shop is accessible from the main menu and uses the shared star
-balance. It contains permanent purchases, disk skins and consumable
-helper-token packs.
+Veikals ir pieejams galvenajā izvēlnē un izmanto kopējo zvaigžņu
+bilanci. Tajā pieejami pastāvīgi pirkumi, disku vizuālie noformējumi un
+patērējamu palīgtokenu komplekti.
 
-The current offers configured in the project are:
+Projektā pašlaik konfigurētie piedāvājumi:
 
-  Item                                        Type                        Price
-  ------------------------------------------- ---------------------- ----------
-  Disable advertisements (`bez_reklamam`)     Permanent                30 stars
-  Marble disk skin (`marmors`)                Disk skin                15 stars
-  Gold disk skin (`zelts`)                    Disk skin                25 stars
-  Wooden disk skin (`koks`)                   Disk skin                 8 stars
-  Hint tokens (`padomi`)                      Token pack, 3 tokens      5 stars
-  Undo tokens (`atsauksanas`)                 Token pack, 3 tokens      5 stars
-  Colourful/default disk skin (`krasainie`)   Default skin                 Free
+  ------------------------------------------------------------------------
+  Prece                 Veids                                         Cena
+  --------------------- --------------------- ----------------------------
+  Reklāmu atspējošana   Pastāvīgs pirkums                     30 zvaigznes
+  (`bez_reklamam`)                            
 
-Purchased disk skins can be selected for Tower of Hanoi. Token packs
-provide three uses per purchase. The shop updates the displayed balance
-and offer states when the star balance or owned items change.
+  Marmora diska izskats Diska izskats                         15 zvaigznes
+  (`marmors`)                                 
 
-**Screenshot --- Shop**
+  Zelta diska izskats   Diska izskats                         25 zvaigznes
+  (`zelts`)                                   
 
-![Shop screenshot](docs/screenshots/shop.png)
+  Koka diska izskats    Diska izskats                          8 zvaigznes
+  (`koks`)                                    
 
-## Advertisements
+  Padomu tokeni         3 tokenu komplekts                     5 zvaigznes
+  (`padomi`)                                  
 
-The project integrates Unity Ads through the scripts in
-`Assets/Scripts/Ads/`.
+  Gājienu atsaukšanas   3 tokenu komplekts                     5 zvaigznes
+  tokeni                                      
+  (`atsauksanas`)                             
 
-The implementation includes: - Interstitial advertisements. - Rewarded
-advertisements. - Banner advertisements. - A persistent ad manager that
-survives scene changes. - A shop purchase that disables advertisements.
+  Krāsainais /          Noklusējuma izskats                      Bezmaksas
+  noklusējuma diska                           
+  izskats (`krasainie`)                       
+  ------------------------------------------------------------------------
 
-Rewarded ads are used as an alternative way to obtain Tower of Hanoi
-hints and undo moves when the player does not have the corresponding
-tokens.
+Iegādātos disku noformējumus var izvēlēties Hanojas torņu režīmā. Tokenu
+komplekti nodrošina trīs izmantošanas reizes. Veikals atjauno attēloto
+zvaigžņu bilanci un piedāvājumu stāvokli pēc zvaigžņu vai preču
+īpašumtiesību izmaiņām.
 
-> Ad availability and display depend on Unity Ads configuration,
-> platform support, placement IDs, and the project's Unity Ads dashboard
-> settings. Use test mode during development.
+**Ekrānuzņēmums --- spēles veikals**
 
-## Project structure
+![Veikala ekrānuzņēmums](docs/screenshots/shop.png)
+
+## Reklāmas
+
+Projektā izmantota Unity Ads integrācija, kuras darbību nodrošina
+skripti mapē `Assets/Scripts/Ads/`.
+
+Integrācijā iekļauts: - Pilnekrāna reklāmas (`Interstitial Ads`). -
+Atlīdzības reklāmas (`Rewarded Ads`). - Baneru reklāmas
+(`Banner Ads`). - Reklāmu pārvaldnieks, kas saglabājas starp ainām. -
+Veikala pirkums reklāmu atspējošanai.
+
+Atlīdzības reklāmas Hanojas torņu režīmā var izmantot kā alternatīvu
+padomu vai gājiena atsaukšanas tokeniem, ja spēlētājam to nav.
+
+> Reklāmu pieejamība un attēlošana ir atkarīga no Unity Ads
+> konfigurācijas, platformas atbalsta, izvietojumu ID un Unity Ads
+> informācijas paneļa iestatījumiem. Izstrādes laikā izmanto testēšanas
+> režīmu.
+
+## Projekta struktūra
 
 ``` text
 Assets/
@@ -224,103 +250,107 @@ Assets/
 └── ...
 ```
 
-### Main scripts
+### Galvenie skripti
 
   -----------------------------------------------------------------------
-  Script                              Responsibility
+  Skripts                             Atbildība
   ----------------------------------- -----------------------------------
-  `StartMenuScript.cs`                Main menu navigation, audio and
-                                      interactive menu actions
+  `StartMenuScript.cs`                Galvenās izvēlnes navigācija,
+                                      skaņas un interaktīvās izvēlnes
+                                      darbības
 
-  `GameManagerScript.cs`              Car Puzzle timer, lives, win/lose
-                                      state and time-based star rewards
+  `GameManagerScript.cs`              Automašīnu puzles taimeris,
+                                      dzīvības, uzvaras/zaudējuma
+                                      stāvoklis un laika zvaigžņu
+                                      atlīdzība
 
-  `GameObjectsScript.cs`              Car objects and placement-related
-                                      game logic
+  `GameObjectsScript.cs`              Automašīnu objekti un to
+                                      novietošanas loģika
 
-  `DragAndDropScript.cs`              Dragging car UI objects
+  `DragAndDropScript.cs`              Automašīnu UI objektu pārvietošana
 
-  `HanoiGameManager.cs`               Hanoi levels, legal moves, move
-                                      count, stars, hints, undo and
-                                      progression
+  `HanoiGameManager.cs`               Hanojas torņu līmeņi, atļautie
+                                      gājieni, gājienu skaits, zvaigznes,
+                                      padomi, atsaukšana un progresija
 
-  `HanoiRod.cs`                       Tracks disks on a rod and handles
-                                      disk drop targets
+  `HanoiRod.cs`                       Disku uzskaite uz stieņiem un disku
+                                      nomešanas vietu apstrāde
 
-  `HanoiDisk.cs`                      Disk initialization, dragging,
-                                      movement animation and hint
-                                      highlighting
+  `HanoiDisk.cs`                      Disku inicializācija, pārvietošana,
+                                      animācija un padoma izcelšana
 
-  `StarBank.cs`                       Shared star balance, shop
-                                      ownership, disk skin selection and
-                                      helper tokens
+  `StarBank.cs`                       Kopējā zvaigžņu bilance, veikala
+                                      pirkumi, disku noformējumi un
+                                      palīgtokeni
 
-  `ShopPanel.cs` / `ShopOffer.cs`     Shop panel, purchase handling and
-                                      offer UI
+  `ShopPanel.cs` / `ShopOffer.cs`     Veikala panelis, pirkumu apstrāde
+                                      un piedāvājumu saskarne
 
-  `AdManager.cs`                      Persistent advertisement management
-                                      across scenes
+  `AdManager.cs`                      Reklāmu pārvaldība starp ainām
 
-  `AdsInitializer.cs`                 Unity Ads initialization
+  `AdsInitializer.cs`                 Unity Ads inicializācija
 
-  `InterstitialAd.cs`                 Interstitial ad loading and display
+  `InterstitialAd.cs`                 Pilnekrāna reklāmu ielāde un
+                                      attēlošana
 
-  `RewardedAds.cs`                    Rewarded ad loading, display and
-                                      completion callbacks
+  `RewardedAds.cs`                    Atlīdzības reklāmu ielāde,
+                                      attēlošana un pabeigšanas apstrāde
 
-  `BannerAd.cs`                       Banner ad loading, positioning and
-                                      visibility
+  `BannerAd.cs`                       Baneru reklāmu ielāde, novietojums
+                                      un redzamība
   -----------------------------------------------------------------------
 
-## How to run
+## Projekta palaišana
 
-1.  Install a compatible version of Unity that supports the packages
-    used by the project.
-2.  Open the project through Unity Hub.
-3.  Allow Unity to import assets and resolve packages.
-4.  Open `Assets/Scenes/StartMenu.unity`.
-5.  Press **Play** to start from the main menu.
+1.  Instalē Unity versiju, kas ir saderīga ar projektā izmantotajām
+    pakotnēm.
+2.  Atver projektu, izmantojot Unity Hub.
+3.  Sagaidi, līdz Unity importē resursus un atrisina pakotņu atkarības.
+4.  Atver ainu `Assets/Scenes/StartMenu.unity`.
+5.  Nospied **Play**, lai sāktu spēli no galvenās izvēlnes.
 
-The scenes are named `StartMenu`, `CityScene` and `TowerOfHanoi`. Keep
-these names consistent with the scene-loading references in the scripts.
+Projektā izmantoto ainu nosaukumi ir `StartMenu`, `CityScene` un
+`TowerOfHanoi`. Saglabā šos nosaukumus, jo skriptos ir atsauces uz ainām
+pēc to nosaukumiem.
 
-For Android builds, configure the Android Build Support module and the
-required Unity Ads settings. Verify the Android Game ID and ad unit IDs
-in the relevant scripts and Unity Ads dashboard before making a
-production build.
+Veidojot Android versiju, pārliecinies, ka instalēts Android Build
+Support modulis un konfigurēti nepieciešamie Unity Ads iestatījumi.
+Pirms produkcijas versijas izveides pārbaudi Android Game ID un reklāmu
+izvietojumu ID skriptos un Unity Ads informācijas panelī.
 
-## Controls
+## Vadība
 
-### Car Puzzle
+### Automašīnu puzle
 
--   Drag cars with the mouse or touchscreen.
--   Place each car in its matching location.
--   Use the on-screen controls where available.
+-   Velc automašīnas ar peli vai skārienekrānu.
+-   Novieto katru automašīnu tai paredzētajā vietā.
+-   Izmanto ekrānā pieejamās vadības pogas.
 
-### Tower of Hanoi
+### Hanojas torņi
 
--   Drag the top disk from one rod to another.
--   A move is rejected if it breaks the disk-size rule.
--   Use the Hint and Undo buttons when available.
--   Complete the current level to unlock the next one.
+-   Velc stieņa augšējo disku uz citu stieni.
+-   Gājiens tiek noraidīts, ja tas pārkāpj disku izmēru noteikumus.
+-   Ja pieejams, izmanto pogas **Padoms** un **Atsaukt**.
+-   Pabeidz pašreizējo līmeni, lai atbloķētu nākamo.
 
-## Development notes
+## Piezīmes izstrādātājiem
 
--   Player progress, star balance, purchases, disk skin selection, Hanoi
-    unlocks and best level stars use `PlayerPrefs` and are stored
-    locally on the device.
--   The project contains test shortcuts: `F1` forces a Car Puzzle win or
-    a Hanoi level win, depending on the active game mode; `F2` adds 50
-    stars. The main menu also contains a hidden duck interaction that
-    awards test stars. Remove or disable these test mechanisms before a
-    public release.
--   The project includes editor scripts under `Assets/Editor/`.
--   The game uses Unity UI and TextMeshPro components.
+-   Spēlētāja progress, zvaigžņu bilance, pirkumi, izvēlētais diska
+    noformējums, Hanojas torņu atbloķētie līmeņi un labākie zvaigžņu
+    rezultāti tiek saglabāti ierīcē, izmantojot `PlayerPrefs`.
+-   Projektā ir testēšanas funkcijas: `F1` piespiedu kārtā pabeidz
+    automašīnu puzles vai Hanojas torņu līmeni atkarībā no aktīvā
+    režīma; `F2` piešķir 50 zvaigznes. Galvenajā izvēlnē ir arī slēpta
+    pīles mijiedarbība, kas piešķir testa zvaigznes. Pirms publiskas
+    spēles versijas izdošanas šīs testēšanas funkcijas nepieciešams
+    noņemt vai atspējot.
+-   Projekts satur Unity Editor skriptus mapē `Assets/Editor/`.
+-   Spēlē izmantoti Unity UI un TextMeshPro komponenti.
 
-## Screenshots folder
+## Ekrānuzņēmumu mape
 
-Create this folder in the repository and add your screenshots using the
-filenames referenced above:
+Izveido šo mapi repozitorijā un pievieno ekrānuzņēmumus ar zemāk
+norādītajiem failu nosaukumiem:
 
 ``` text
 docs/
