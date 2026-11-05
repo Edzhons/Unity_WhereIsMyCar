@@ -1,245 +1,338 @@
-# 🚗 Kur mans vāģ's?
+# Car Puzzle & Tower of Hanoi
 
-Vienkārša 2D puzles spēle, kas izstrādāta **Unity**, kurā spēlētājam uz kartes jānovieto dažādas automašīnas tām paredzētajās vietās.
+A Unity puzzle game featuring two game modes: a car-placement puzzle and
+the classic Tower of Hanoi. The project includes progression, star
+rewards, a shared in-game currency, a shop with unlockable disk skins
+and helper tokens, and Unity Ads integration.
 
-Spēlētājam katra automašīna ir jāaizvelk uz atbilstošo vietu un jāpielāgo tās:
+> **Screenshots:** Add your own screenshots to `docs/screenshots/` and
+> use the filenames shown below. The image placeholders will display
+> once the files are added.
 
-- pozīcija;
-- izmērs;
-- rotācija;
-- spoguļattēls.
+## Table of contents
 
-Kad visi parametri atbilst paredzētajai vietai, automašīna tiek uzskatīta par pareizi novietotu.
+-   [Game modes](#game-modes)
+    -   [Car Puzzle](#car-puzzle)
+    -   [Tower of Hanoi](#tower-of-hanoi)
+-   [Progression and star system](#progression-and-star-system)
+-   [Shop](#shop)
+-   [Advertisements](#advertisements)
+-   [Project structure](#project-structure)
+-   [How to run](#how-to-run)
+-   [Controls](#controls)
+-   [Development notes](#development-notes)
 
----
+## Game modes
 
-## 🎮 Spēles vadība
+The project contains three Unity scenes:
 
-| Taustiņš | Darbība |
-|---|---|
-| `Kreisā peles poga` | Vilkt automašīnu |
-| `Z` | Rotēt pretēji pulksteņrādītāja virzienam |
-| `X` | Rotēt pulksteņrādītāja virziená |
-| `↑` | Palielināt augstumu |
-| `↓` | Samazināt augstumu |
-| `←` | Samazināt platumu |
-| `→` | Palielināt platumu |
-| `Space` | Izveidot spoguļattēlu |
+  -----------------------------------------------------------------------
+  Scene                               Purpose
+  ----------------------------------- -----------------------------------
+  `StartMenu`                         Main menu, game-mode selection,
+                                      shop and settings/interactions
 
-Automašīna tiek uzskatīta par pareizi novietotu, ja:
+  `CityScene`                         Car puzzle gameplay
 
-- tai ir pareizais tags;
-- rotācijas starpība ir pieļaujamajā robežā;
-- platuma un augstuma starpība ir pieļaujamajā robežā;
-- spoguļattēla stāvoklis atbilst paredzētajai vietai.
+  `TowerOfHanoi`                      Tower of Hanoi puzzle gameplay
+  -----------------------------------------------------------------------
 
----
+### Main menu
 
-## 🧩 Randomizācija
+The main menu is the central hub. Players can enter either game mode and
+open the in-game shop. The menu also includes interactive elements and
+audio feedback.
 
-Spēlē tiek izmantotas randomizētas automašīnu un to vietu sākuma pozīcijas.
+**Screenshot --- Main menu**
 
-Spēlē kopā ir:
+![Main menu screenshot](docs/screenshots/main-menu.png)
 
-- **12 automašīnas**;
-- **12 automašīnu vietas**;
-- **17 iespējamās automašīnu pozīcijas**;
-- **17 iespējamās automašīnu vietu pozīcijas**.
+### Car Puzzle
 
-Katras spēles sākumā pozīcijas tiek sajauktas, un 12 no 17 pozīcijām tiek izmantotas.
+In the Car Puzzle mode, players drag cars into their matching parking
+spaces on the map. Cars can require transformations such as resizing,
+mirroring or rotation to fit the target space.
 
-Tas nozīmē, ka katrā spēlē:
+The game includes: - Drag-and-drop car placement. - Car transformation
+mechanics. - A timer and life system. - Flying hazards that can cost the
+player a life. - Win and lose screens. - A star reward based on
+completion time.
 
-- 12 pozīcijas tiek aizņemtas;
-- 5 pozīcijas paliek tukšas.
+**Screenshot --- Car Puzzle gameplay**
 
-Tiek randomizēti arī automašīnu parametri:
+![Car Puzzle gameplay
+screenshot](docs/screenshots/car-puzzle-gameplay.png)
 
-- pozīcija;
-- rotācija;
-- platums;
-- augstums;
-- spoguļattēls.
+**Screenshot --- Car Puzzle result screen**
 
-Tādējādi katra spēles palaišana veido atšķirīgu puzles konfigurāciju.
+![Car Puzzle result screenshot](docs/screenshots/car-puzzle-results.png)
 
----
+### Tower of Hanoi
 
-## 🖼️ Ekrānattēli
+Tower of Hanoi is an additional puzzle mode based on the classic
+disk-stacking challenge. The objective is to move the complete stack
+from the first rod to the third rod while following the standard rules:
 
-### Sākuma ekrāns
+1.  Move only one disk at a time.
+2.  Only the top disk of a rod can be moved.
+3.  A larger disk cannot be placed on top of a smaller disk.
 
-![Galvenā spēle](Assets/startMenu.png)
+The mode has **three progressively harder levels**:
 
-### Spēles piemērs
+  Level     Number of disks   Minimum moves
+  ------- ----------------- ---------------
+  1                       3               7
+  2                       4              15
+  3                       5              31
 
-![Spēles piemērs](Assets/gameplay.png)
+Players drag disks between the three rods. The game tracks the number of
+moves and compares it with the theoretical minimum.
 
-### Uzvaras ekrāns
+#### Star rating and level progression
 
-![Pareizi novietota automašīna](Assets/winPopup.png)
+Each completed level awards stars based on the number of moves:
 
----
+-   **3 stars:** solved in the minimum possible number of moves.
+-   **2 stars:** solved in up to 1.5 times the minimum number of moves.
+-   **1 star:** completed with more moves.
 
-## 🛠️ Izmantotās tehnoloģijas
+The best star result for each level is saved. Completing a level unlocks
+the next one. The level selection screen displays each level's unlock
+state and saved star result.
 
-- **Unity**
-- **C#**
-- Unity UI / `RectTransform`
-- Unity Event System
-- Git
-- GitHub
+#### Hints and undo
 
----
+Players can request: - **Hint:** highlights the disk to move and
+indicates the destination rod. - **Undo:** reverses the most recent
+valid move.
 
-## 📁 Projekta struktūra
+Hints and undo can be used with tokens purchased in the shop. If the
+player has no tokens, the game can offer a rewarded advertisement
+instead. The bonus is granted only when the rewarded ad is completed
+successfully.
 
-Galvenie spēlē izmantotie skripti:
+**Screenshot --- Tower of Hanoi level selection**
 
-```text
-Scripts/
-├── DragAndDropScript.cs
-├── DropPlaceScript.cs
-├── GameObjectsScript.cs
-├── ObjectTransformationScript.cs
-└── ScreenBoundaryScript.cs
+![Tower of Hanoi level selection
+screenshot](docs/screenshots/hanoi-level-selection.png)
+
+**Screenshot --- Tower of Hanoi gameplay**
+
+![Tower of Hanoi gameplay
+screenshot](docs/screenshots/hanoi-gameplay.png)
+
+**Screenshot --- Tower of Hanoi hint or undo**
+
+![Tower of Hanoi helper
+screenshot](docs/screenshots/hanoi-hint-undo.png)
+
+**Screenshot --- Tower of Hanoi level completion**
+
+![Tower of Hanoi results screenshot](docs/screenshots/hanoi-results.png)
+
+## Progression and star system
+
+Both game modes contribute to a shared star balance.
+
+-   The Car Puzzle awards stars according to the time taken to complete
+    the level.
+-   Tower of Hanoi awards stars according to move efficiency.
+-   Stars are stored locally using Unity `PlayerPrefs`.
+-   The shared balance can be spent in the shop.
+-   Hanoi level unlocks and each level's best star result are also
+    stored locally.
+
+The star balance is managed by the static `StarBank` class.
+
+## Shop
+
+The shop is accessible from the main menu and uses the shared star
+balance. It contains permanent purchases, disk skins and consumable
+helper-token packs.
+
+The current offers configured in the project are:
+
+  Item                                        Type                        Price
+  ------------------------------------------- ---------------------- ----------
+  Disable advertisements (`bez_reklamam`)     Permanent                30 stars
+  Marble disk skin (`marmors`)                Disk skin                15 stars
+  Gold disk skin (`zelts`)                    Disk skin                25 stars
+  Wooden disk skin (`koks`)                   Disk skin                 8 stars
+  Hint tokens (`padomi`)                      Token pack, 3 tokens      5 stars
+  Undo tokens (`atsauksanas`)                 Token pack, 3 tokens      5 stars
+  Colourful/default disk skin (`krasainie`)   Default skin                 Free
+
+Purchased disk skins can be selected for Tower of Hanoi. Token packs
+provide three uses per purchase. The shop updates the displayed balance
+and offer states when the star balance or owned items change.
+
+**Screenshot --- Shop**
+
+![Shop screenshot](docs/screenshots/shop.png)
+
+## Advertisements
+
+The project integrates Unity Ads through the scripts in
+`Assets/Scripts/Ads/`.
+
+The implementation includes: - Interstitial advertisements. - Rewarded
+advertisements. - Banner advertisements. - A persistent ad manager that
+survives scene changes. - A shop purchase that disables advertisements.
+
+Rewarded ads are used as an alternative way to obtain Tower of Hanoi
+hints and undo moves when the player does not have the corresponding
+tokens.
+
+> Ad availability and display depend on Unity Ads configuration,
+> platform support, placement IDs, and the project's Unity Ads dashboard
+> settings. Use test mode during development.
+
+## Project structure
+
+``` text
+Assets/
+├── Animations/
+├── Editor/
+├── Fonts/
+├── Prefabs/
+├── Resources/
+├── Scenes/
+│   ├── StartMenu.unity
+│   ├── CityScene.unity
+│   └── TowerOfHanoi.unity
+├── Scripts/
+│   ├── Ads/
+│   │   ├── AdManager.cs
+│   │   ├── AdsInitializer.cs
+│   │   ├── BannerAd.cs
+│   │   ├── InterstitialAd.cs
+│   │   └── RewardedAds.cs
+│   ├── Shop/
+│   │   ├── StarBank.cs
+│   │   ├── ShopPanel.cs
+│   │   ├── ShopOffer.cs
+│   │   ├── StarBalanceLabel.cs
+│   │   └── ...
+│   ├── TowerOfHanoi/
+│   │   ├── HanoiGameManager.cs
+│   │   ├── HanoiRod.cs
+│   │   └── HanoiDisk.cs
+│   ├── GameManagerScript.cs
+│   ├── GameObjectsScript.cs
+│   ├── DragAndDropScript.cs
+│   └── ...
+└── ...
 ```
 
-### `DragAndDropScript.cs`
+### Main scripts
 
-Atbild par automašīnu vilkšanu ar peli.
+  -----------------------------------------------------------------------
+  Script                              Responsibility
+  ----------------------------------- -----------------------------------
+  `StartMenuScript.cs`                Main menu navigation, audio and
+                                      interactive menu actions
 
-### `DropPlaceScript.cs`
+  `GameManagerScript.cs`              Car Puzzle timer, lives, win/lose
+                                      state and time-based star rewards
 
-Atbild par automašīnas ievietošanu paredzētajā vietā un pārbauda, vai automašīna atbilst vietai.
+  `GameObjectsScript.cs`              Car objects and placement-related
+                                      game logic
 
-Tiek pārbaudīts:
+  `DragAndDropScript.cs`              Dragging car UI objects
 
-- tags;
-- rotācija;
-- izmērs;
-- spoguļattēls.
+  `HanoiGameManager.cs`               Hanoi levels, legal moves, move
+                                      count, stars, hints, undo and
+                                      progression
 
-### `GameObjectsScript.cs`
+  `HanoiRod.cs`                       Tracks disks on a rod and handles
+                                      disk drop targets
 
-Satur spēles objektu atsauces un apstrādā automašīnu un to vietu randomizāciju.
+  `HanoiDisk.cs`                      Disk initialization, dragging,
+                                      movement animation and hint
+                                      highlighting
 
-### `ObjectTransformationScript.cs`
+  `StarBank.cs`                       Shared star balance, shop
+                                      ownership, disk skin selection and
+                                      helper tokens
 
-Atbild par izvēlētās automašīnas parametru mainīšanu:
+  `ShopPanel.cs` / `ShopOffer.cs`     Shop panel, purchase handling and
+                                      offer UI
 
-- rotāciju;
-- platumu;
-- augstumu;
-- spoguļattēlu.
+  `AdManager.cs`                      Persistent advertisement management
+                                      across scenes
 
-### `ScreenBoundaryScript.cs`
+  `AdsInitializer.cs`                 Unity Ads initialization
 
-Nodrošina, ka vilktie objekti paliek atļautajā kartes/ekrāna apgabalā.
+  `InterstitialAd.cs`                 Interstitial ad loading and display
 
----
+  `RewardedAds.cs`                    Rewarded ad loading, display and
+                                      completion callbacks
 
-# ✅ TODO
+  `BannerAd.cs`                       Banner ad loading, positioning and
+                                      visibility
+  -----------------------------------------------------------------------
 
-## 🎯 Spēles pamatfunkcionalitāte
+## How to run
 
-- [x] Automašīnu vilkšana
-- [x] Automašīnu un vietu sasaistīšana ar tagiem
-- [x] Automašīnu rotēšana
-- [x] Automašīnu izmēra mainīšana
-- [x] Automašīnu spoguļošana
-- [x] Pareizas novietošanas pārbaude
-- [x] Nepareizas novietošanas apstrāde
-- [x] Nejaušas automašīnu pozīcijas
-- [x] Nejaušas automašīnu vietu pozīcijas
-- [x] Nejauša rotācija
-- [x] Nejaušs izmērs
-- [x] Nejaušs spoguļattēls
-- [x] Pilnībā pārbaudīt randomizāciju
+1.  Install a compatible version of Unity that supports the packages
+    used by the project.
+2.  Open the project through Unity Hub.
+3.  Allow Unity to import assets and resolve packages.
+4.  Open `Assets/Scenes/StartMenu.unity`.
+5.  Press **Play** to start from the main menu.
 
----
+The scenes are named `StartMenu`, `CityScene` and `TowerOfHanoi`. Keep
+these names consistent with the scene-loading references in the scripts.
 
-## 🏠 Sākuma izvēlne
+For Android builds, configure the Android Build Support module and the
+required Unity Ads settings. Verify the Android Game ID and ad unit IDs
+in the relevant scripts and Unity Ads dashboard before making a
+production build.
 
-- [x] Izveidot sākuma izvēlni
-- [x] Pievienot **Līmenis 1** pogu
-- [x] Pievienot **Iziet** pogu
-- [x] Izveidot sākuma izvēlnes fonu
-- [x] Savienot **Līmenis 1** pogu ar spēles ainu
-- [x] Savienot **Iziet** pogu ar programmas aizvēršanu
-- [x] Pārbaudīt ainu pārslēgšanu
+## Controls
 
----
+### Car Puzzle
 
-## 🔊 Skaņa
+-   Drag cars with the mouse or touchscreen.
+-   Place each car in its matching location.
+-   Use the on-screen controls where available.
 
-- [x] Automašīnas mijiedarbības skaņa
-- [x] Pareizas novietošanas skaņa
-- [x] Nepareizas novietošanas skaņa
-- [x] Pievienot sākuma izvēlnes mūziku
-- [x] Pievienot spēles fona mūziku
-- [x] Pievienot pogu skaņas
-- [x] Pievienot skaņas izslēgšanas iespēju
+### Tower of Hanoi
 
----
+-   Drag the top disk from one rod to another.
+-   A move is rejected if it breaks the disk-size rule.
+-   Use the Hint and Undo buttons when available.
+-   Complete the current level to unlock the next one.
 
-## ✨ Animācijas un vizuālie efekti
+## Development notes
 
-- [x] Pievienot pogu animācijas
-- [x] Pievienot pogu nospiešanas animācijas
-- [x] Pievienot pareizas novietošanas animāciju
-- [x] Pievienot vizuālu reakciju nepareizas novietošanas gadījumā
-- [x] Pievienot nelielas kartes/vides animācijas
+-   Player progress, star balance, purchases, disk skin selection, Hanoi
+    unlocks and best level stars use `PlayerPrefs` and are stored
+    locally on the device.
+-   The project contains test shortcuts: `F1` forces a Car Puzzle win or
+    a Hanoi level win, depending on the active game mode; `F2` adds 50
+    stars. The main menu also contains a hidden duck interaction that
+    awards test stars. Remove or disable these test mechanisms before a
+    public release.
+-   The project includes editor scripts under `Assets/Editor/`.
+-   The game uses Unity UI and TextMeshPro components.
 
----
+## Screenshots folder
 
-## 🏆 Spēles pabeigšana
+Create this folder in the repository and add your screenshots using the
+filenames referenced above:
 
-- [x] Noteikt, kad visas automašīnas ir pareizi novietotas
-- [x] Izveidot spēles pabeigšanas ekrānu/paziņojumu
-- [x] Pievienot pabeigšanas skaņu
-- [x] Pievienot iespēju sākt puzli no jauna
-- [x] Pievienot iespēju atgriezties sākuma izvēlnē
+``` text
+docs/
+└── screenshots/
+    ├── main-menu.png
+    ├── car-puzzle-gameplay.png
+    ├── car-puzzle-results.png
+    ├── hanoi-level-selection.png
+    ├── hanoi-gameplay.png
+    ├── hanoi-hint-undo.png
+    ├── hanoi-results.png
+    └── shop.png
+```
 
----
-
-## ⚙️ Uzlabošana un noslēdzošā izstrāde
-
-- [x] Uzlabot lietotāja saskarni
-- [x] Pievienot vizuālu norādi izvēlētajai automašīnai
-- [x] Uzlabot nepareizas novietošanas vizuālo reakciju
-- [x] Pārbaudīt spēli dažādās ekrāna izšķirtspējās
-- [x] Pārbaudīt dažādus ekrāna malu attiecību formātus
-- [x] Novērst atlikušos Unity brīdinājumus/kļūdas, ja tie ietekmē spēli
-- [x] Veikt pilnu spēles testēšanu
-
----
-
-## 🐛 Zināmās problēmas
-
-Pašlaik nav zināmu spēli bloķējošu problēmu.
-
----
-
-## 📌 Projekta statuss
-
-**Izstrādes stadija:** Aktīva izstrāde
-
-Spēles galvenā puzles funkcionalitāte ir izveidota. Tālāk plānots izstrādāt sākuma izvēlni, papildināt skaņas un animācijas, uzlabot vizuālo noformējumu un veikt gala testēšanu.
-
----
-
-## 👨‍💻 Autors
-
-**Edžus Krūmiņš**
-
-Programmēšanas tehniķis  
-Liepājas Valsts tehnikums
-
----
-
-## 📜 Licence
-
-Šis projekts ir izstrādāts mācību un noslēguma projekta vajadzībām.
-
-Visas tiesības aizsargātas.
+------------------------------------------------------------------------
